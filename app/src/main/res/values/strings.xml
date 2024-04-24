@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">GestionCine</string>
+    <string name="sign_in">Iniciar Sesión</string>
+    <string name="email">correo</string>
+    <string name="password">contraseña</string>
+    <string name="forgot_password">¿Olvidaste la contraseña?</string>
+    <string name="next">Siguiente</string>
+    <string name="dont_have_account">No tengo una cuenta</string>
+    <string name="register_now">Regístrate ahora</string>
 </resources>

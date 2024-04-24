@@ -1,6 +1,10 @@
 package com.mobilepulse.gestioncine;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +13,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private EditText campoUser, campoPassword;
+    private Button botonSiguiente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +26,25 @@ public class LoginActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        inicializaVista();
+    }
+
+    private void inicializaVista() {
+        campoUser = findViewById(R.id.campoUser);
+        campoPassword = findViewById(R.id.campoPassword);
+        botonSiguiente = findViewById(R.id.botonSiguiente);
+
+        botonSiguiente.setOnClickListener(v -> {
+            if( campoUser.getText().toString().isEmpty() || campoPassword.getText().toString().isEmpty() ) {
+                Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_SHORT).show();
+
+            } else if( campoUser.getText().toString().equals("usuario") && campoPassword.getText().toString().equals("usuario") ) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            }else{
+                Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
