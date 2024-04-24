@@ -7,4 +7,7 @@
     <string name="next">Siguiente</string>
     <string name="dont_have_account">No tengo una cuenta</string>
     <string name="register_now">Regístrate ahora</string>
+    <string name="register">Registrarse</string>
+    <string name="name">nombre</string>
+    <string name="date">fecha de nacimiento</string>
 </resources>

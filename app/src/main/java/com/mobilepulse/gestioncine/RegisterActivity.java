@@ -1,10 +1,8 @@
 package com.mobilepulse.gestioncine;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -13,44 +11,46 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class LoginActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
-    private TextView textoRegistrateAhora;
-    private EditText campoUser, campoPassword;
+    private EditText campoName, campoUser, campoPassword, campoFecha;
     private Button botonSiguiente;
+    private String name, user, password, fecha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        
         inicializaVista();
-
-        // Al pulsar registrar, nos lleva a la vista de registro.
-        textoRegistrateAhora = findViewById(R.id.textoRegistrateAhora);
-        textoRegistrateAhora.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
     }
 
-    // Inicia la vista para comprobar credenciales.
     private void inicializaVista() {
+        campoName = findViewById(R.id.campoName);
         campoUser = findViewById(R.id.campoUser);
         campoPassword = findViewById(R.id.campoPassword);
+        campoFecha = findViewById(R.id.campoFecha);
         botonSiguiente = findViewById(R.id.botonSiguiente);
 
         botonSiguiente.setOnClickListener(v -> {
-            if( campoUser.getText().toString().isEmpty() || campoPassword.getText().toString().isEmpty() ) {
-                Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_SHORT).show();
-
-            } else if( campoUser.getText().toString().equals("usuario") && campoPassword.getText().toString().equals("usuario") ) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            if( campoName.getText().toString().isEmpty() || campoUser.getText().toString().isEmpty() || campoPassword.getText().toString().isEmpty() || campoFecha.getText().toString().isEmpty() ) {
+                Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+                name = campoName.getText().toString();
+                user = campoUser.getText().toString();
+                password = campoPassword.getText().toString();
+                fecha = campoFecha.getText().toString();
+
+                // Se inserta en la bd...
+
+                // Provisional para ver que funciona.
+                Toast.makeText(this, "Usuario registrado", Toast.LENGTH_SHORT).show();
             }
         });
     }
