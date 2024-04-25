@@ -9,5 +9,7 @@
     <string name="register_now">Regístrate ahora</string>
     <string name="register">Registrarse</string>
     <string name="name">nombre</string>
+    <string name="surname">apellidos</string>
     <string name="date">fecha de nacimiento</string>
+    <string name="privacity">He leído y acepto la política de privacidad.</string>
 </resources>

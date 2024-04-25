@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textoIniciarSesion"
@@ -32,7 +32,7 @@
 
             <EditText
                 android:id="@+id/campoName"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:hint="@string/name"
                 android:textAlignment="center"
@@ -43,6 +43,21 @@
                 android:background="@drawable/edittext_fondo"
                 android:layout_marginTop="100dp"
                 android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"/>
+
+            <EditText
+                android:id="@+id/campoApellidos"
+                android:layout_width="190dp"
+                android:layout_height="50dp"
+                android:hint="@string/surname"
+                android:textAlignment="center"
+                android:textColor="@color/texto"
+                android:textColorHint="@color/texto"
+                android:ems="10"
+                android:inputType="text"
+                android:background="@drawable/edittext_fondo"
+                android:layout_marginTop="-50dp"
+                android:layout_marginStart="190dp"
                 android:layout_marginEnd="32dp"/>
 
             <EditText
@@ -90,10 +105,21 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"/>
 
+
+            <CheckBox
+                android:id="@+id/campoConsentimiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/texto"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:text="@string/privacity"/>
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/botonSiguiente"
                 style="@android:style/Widget.Button"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:background="@color/boton"
@@ -102,7 +128,7 @@
                 android:textColor="@color/texto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/next" />
+                android:text="@string/next"/>
         </LinearLayout>
     </ScrollView>
 

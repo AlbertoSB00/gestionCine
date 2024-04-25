@@ -1,5 +1,6 @@
 package com.mobilepulse.gestioncine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // Provisional para ver que funciona.
                 Toast.makeText(this, "Usuario registrado", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
             }
         });
     }
