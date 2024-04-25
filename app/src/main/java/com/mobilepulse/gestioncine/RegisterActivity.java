@@ -13,11 +13,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText campoName, campoSurname, campoUser, campoPassword, campoFecha;
-    private String name, surname, user, password, fecha;
     private CheckBox campoConsentimiento;
+
+    // SQL Connection
+    private ConnectionSQL connectionSQL;
+    private Connection connection;
+    private ResultSet resultSet;
+    private String name, surname, user, password, fecha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +39,12 @@ public class RegisterActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        
+
+        // Crea la conexión con la base de datos.
+        connectionSQL = new ConnectionSQL();
+        connect();
+
+        // Inicializa la vista.
         inicializaVista();
     }
 
@@ -54,11 +69,27 @@ public class RegisterActivity extends AppCompatActivity {
                 password = campoPassword.getText().toString();
                 fecha = campoFecha.getText().toString();
 
-                // Se inserta en la bd...
-
                 // Provisional para ver que funciona.
                 Toast.makeText(this, "Usuario registrado", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+            }
+        });
+    }
+
+    public void connect() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            try {
+                connection = connectionSQL.newConnection();
+                runOnUiThread(() -> {
+                    if (connection != null) {
+                        Toast.makeText(RegisterActivity.this, "Conectado", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Error al conectar", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
     }

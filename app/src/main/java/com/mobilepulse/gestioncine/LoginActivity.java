@@ -13,9 +13,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/*
+import java.sql.Connection;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+*/
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText campoUser, campoPassword;
+
+    /*
+    private ConnectionSQL connectionSQL;
+    private Connection connection;
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +38,12 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        /*
+        // Crea la conexión con la base de datos.
+        connectionSQL = new ConnectionSQL();
+        connect();
+        */
 
         inicializaVista();
 
@@ -52,4 +69,24 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*
+    public void connect() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            try {
+                connection = connectionSQL.newConnection();
+                runOnUiThread(() -> {
+                    if (connection != null) {
+                        Toast.makeText(LoginActivity.this, "Conectado", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Error al conectar", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    */
 }
