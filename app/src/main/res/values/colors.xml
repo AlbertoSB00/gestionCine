@@ -6,5 +6,6 @@
     <color name="principal">#222831</color>
     <color name="fondo">#393E46</color>
     <color name="texto">#EEEEEE</color>
+    <color name="pistas">#919191</color>
     <color name="boton">#00ADB5</color>
 </resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:background="@color/principal"
@@ -37,13 +36,14 @@
                 android:hint="@string/email"
                 android:textAlignment="center"
                 android:textColor="@color/texto"
-                android:textColorHint="@color/texto"
+                android:textColorHint="@color/pistas"
                 android:ems="10"
                 android:inputType="text"
                 android:background="@drawable/edittext_fondo"
                 android:layout_marginTop="128dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"/>
+                android:layout_marginEnd="32dp"
+                android:autofillHints="emailAddress" />
 
             <EditText
                 android:id="@+id/campoPassword"
@@ -52,13 +52,14 @@
                 android:hint="@string/password"
                 android:textAlignment="center"
                 android:textColor="@color/texto"
-                android:textColorHint="@color/texto"
+                android:textColorHint="@color/pistas"
                 android:ems="10"
                 android:inputType="textPassword"
                 android:background="@drawable/edittext_fondo"
                 android:layout_marginTop="32dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"/>
+                android:layout_marginEnd="32dp"
+                android:autofillHints="password" />
 
             <TextView
                 android:id="@+id/textoOlvidastePassword"

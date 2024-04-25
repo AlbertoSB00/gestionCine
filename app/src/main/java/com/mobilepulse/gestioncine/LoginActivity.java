@@ -15,9 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView textoRegistrateAhora;
     private EditText campoUser, campoPassword;
-    private Button botonSiguiente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         inicializaVista();
 
         // Al pulsar registrar, nos lleva a la vista de registro.
-        textoRegistrateAhora = findViewById(R.id.textoRegistrateAhora);
+        TextView textoRegistrateAhora = findViewById(R.id.textoRegistrateAhora);
         textoRegistrateAhora.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
     }
 
@@ -41,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private void inicializaVista() {
         campoUser = findViewById(R.id.campoUser);
         campoPassword = findViewById(R.id.campoPassword);
-        botonSiguiente = findViewById(R.id.botonSiguiente);
+        Button botonSiguiente = findViewById(R.id.botonSiguiente);
 
         botonSiguiente.setOnClickListener(v -> {
             if( campoUser.getText().toString().isEmpty() || campoPassword.getText().toString().isEmpty() ) {
