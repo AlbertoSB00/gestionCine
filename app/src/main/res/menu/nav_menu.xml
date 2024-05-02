@@ -33,9 +33,14 @@
 
         <menu>
             <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/nav_logout"
-                android:title="Cerrar sesión" />
+                android:id="@+id/nav_register"
+                android:icon="@drawable/nav_login"
+                android:title="Registrarse" />
+
+            <item
+                android:id="@+id/nav_login"
+                android:icon="@drawable/nav_login"
+                android:title="Iniciar sesión"/>
         </menu>
 
     </item>

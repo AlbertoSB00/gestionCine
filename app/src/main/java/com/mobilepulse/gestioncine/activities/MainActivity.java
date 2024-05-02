@@ -1,5 +1,6 @@
 package com.mobilepulse.gestioncine.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -56,8 +57,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReserveFragment()).commit();
         }else if( itemId == R.id.nav_settings ) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
-        }else if( itemId == R.id.nav_logout ) {
-            Toast.makeText(getApplicationContext(), "Logout", Toast.LENGTH_SHORT).show();
+        }else if( itemId == R.id.nav_register ) {
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        }else if( itemId == R.id.nav_login ) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
