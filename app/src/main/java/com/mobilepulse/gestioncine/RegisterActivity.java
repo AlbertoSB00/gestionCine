@@ -94,9 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
 
                     } else {
-                        runOnUiThread(() -> {
-                            Toast.makeText(RegisterActivity.this, "Error al conectar con la bd", Toast.LENGTH_SHORT).show();
-                        });
+                        runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Error al conectar con la bd", Toast.LENGTH_SHORT).show());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
