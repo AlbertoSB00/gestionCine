@@ -12,4 +12,7 @@
     <string name="surname">apellidos</string>
     <string name="date">fecha de nacimiento</string>
     <string name="privacity">He leído y acepto los términos y la política de privacidad.</string>
+
+    <string name="open_nav">Open Navigation Drawner</string>
+    <string name="close_nav">Close Navigation Drawner</string>
 </resources>

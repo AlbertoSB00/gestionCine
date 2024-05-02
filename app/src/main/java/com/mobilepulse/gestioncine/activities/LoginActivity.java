@@ -1,4 +1,4 @@
-package com.mobilepulse.gestioncine;
+package com.mobilepulse.gestioncine.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.mobilepulse.gestioncine.R;
+import com.mobilepulse.gestioncine.connection.ConnectionSQL;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

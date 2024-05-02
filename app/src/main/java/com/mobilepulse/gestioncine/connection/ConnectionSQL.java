@@ -1,4 +1,4 @@
-package com.mobilepulse.gestioncine;
+package com.mobilepulse.gestioncine.connection;
 
 import android.util.Log;
 

@@ -1,4 +1,4 @@
-package com.mobilepulse.gestioncine;
+package com.mobilepulse.gestioncine.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.mobilepulse.gestioncine.R;
+import com.mobilepulse.gestioncine.connection.ConnectionSQL;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
