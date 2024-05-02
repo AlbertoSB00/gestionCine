@@ -2,9 +2,9 @@ package com.mobilepulse.gestioncine;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -13,21 +13,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText campoName, campoSurname, campoUser, campoPassword, campoFecha;
-    private CheckBox campoConsentimiento;
-
-    // SQL Connection
-    private ConnectionSQL connectionSQL;
-    private Connection connection;
-    private ResultSet resultSet;
-    private String name, surname, user, password, fecha;
+    ConnectionSQL connection;
+    Connection connect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,56 +38,91 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         // Crea la conexión con la base de datos.
-        connectionSQL = new ConnectionSQL();
-        connect();
+        connection = new ConnectionSQL();
 
-        // Inicializa la vista.
-        inicializaVista();
-    }
+        // Al pulsar "Siguiente".
+        TextView botonIniciarSesion = findViewById(R.id.botonSiguiente);
+        botonIniciarSesion.setOnClickListener(v -> {
 
-    private void inicializaVista() {
-        campoName = findViewById(R.id.campoName);
-        campoSurname = findViewById(R.id.campoSurname);
-        campoUser = findViewById(R.id.campoUser);
-        campoPassword = findViewById(R.id.campoPassword);
-        campoFecha = findViewById(R.id.campoFecha);
-        Button botonSiguiente = findViewById(R.id.botonSiguiente);
-        campoConsentimiento = findViewById(R.id.campoConsentimiento);
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(() -> {
+                try {
+                    connect = connection.newConnection();
+                    if (connect != null) {
 
-        botonSiguiente.setOnClickListener(v -> {
-            if( campoName.getText().toString().isEmpty() || campoSurname.getText().toString().isEmpty() || campoUser.getText().toString().isEmpty() || campoPassword.getText().toString().isEmpty() || campoFecha.getText().toString().isEmpty() ) {
-                Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
-            } else if (!campoConsentimiento.isChecked()) {
-                Toast.makeText(this, "Debes leer y aceptar los términos y la politica de privacidad.", Toast.LENGTH_SHORT).show();
-            } else{
-                name = campoName.getText().toString();
-                surname = campoSurname.getText().toString();
-                user = campoUser.getText().toString();
-                password = campoPassword.getText().toString();
-                fecha = campoFecha.getText().toString();
+                        EditText campoNombre = findViewById(R.id.campoName);
+                        EditText campoApellidos = findViewById(R.id.campoSurname);
+                        EditText campoCorreo = findViewById(R.id.campoUser);
+                        EditText campoPassword = findViewById(R.id.campoPassword);
+                        EditText campoBirthdate = findViewById(R.id.campoFecha);
+                        CheckBox checkboxPolitica = findViewById(R.id.campoConsentimiento);
 
-                // Provisional para ver que funciona.
-                Toast.makeText(this, "Usuario registrado", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-            }
-        });
-    }
+                        String name = campoNombre.getText().toString();
+                        String surname = campoApellidos.getText().toString();
+                        String email = campoCorreo.getText().toString();
+                        String password = campoPassword.getText().toString();
+                        String birthdate = campoBirthdate.getText().toString();
+                        boolean policityCheck = checkboxPolitica.isChecked();
 
-    public void connect() {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.execute(() -> {
-            try {
-                connection = connectionSQL.newConnection();
-                runOnUiThread(() -> {
-                    if (connection != null) {
-                        Toast.makeText(RegisterActivity.this, "Conectado", Toast.LENGTH_SHORT).show();
+                        if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() ||  birthdate.isEmpty() || !policityCheck) {
+                            runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Por favor, complete todos los campos y marque la política de privacidad", Toast.LENGTH_SHORT).show());
+                            return;
+                        }
+
+                        String hashedPassword = cifrarPassword(password);
+
+                        // Realizar la consulta SQL para insertar un nuevo usuario en la tabla
+                        String query = "INSERT INTO usuario (name, surname, email, password, birthdate) VALUES (?, ?, ?, ?, ?)";
+                        try (PreparedStatement preparedStatement = connect.prepareStatement(query)) {
+                            preparedStatement.setString(1, name);
+                            preparedStatement.setString(2, surname);
+                            preparedStatement.setString(3, email);
+                            preparedStatement.setString(4, hashedPassword);
+                            preparedStatement.setString(5, birthdate);
+
+                            int filasAfectadas = preparedStatement.executeUpdate();
+                            if (filasAfectadas > 0) {
+                                runOnUiThread(() -> {
+                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                });
+                            } else {
+                                runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Error al registrar usuario", Toast.LENGTH_SHORT).show());
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
                     } else {
-                        Toast.makeText(RegisterActivity.this, "Error al conectar", Toast.LENGTH_SHORT).show();
+                        runOnUiThread(() -> {
+                            Toast.makeText(RegisterActivity.this, "Error al conectar con la bd", Toast.LENGTH_SHORT).show();
+                        });
                     }
-                });
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            });
         });
+    }
+
+    // Método para cifrar la contraseña usando SHA-256
+    public String cifrarPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes());
+
+            // Convertir el hash en formato hexadecimal
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
