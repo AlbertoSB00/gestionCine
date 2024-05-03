@@ -57,6 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
                         EditText campoApellidos = findViewById(R.id.campoSurname);
                         EditText campoCorreo = findViewById(R.id.campoUser);
                         EditText campoPassword = findViewById(R.id.campoPassword);
+                        EditText campoRepitePassword = findViewById(R.id.campoRepitePassword);
                         EditText campoBirthdate = findViewById(R.id.campoFecha);
                         CheckBox checkboxPolitica = findViewById(R.id.campoConsentimiento);
 
@@ -64,11 +65,17 @@ public class RegisterActivity extends AppCompatActivity {
                         String surname = campoApellidos.getText().toString();
                         String email = campoCorreo.getText().toString();
                         String password = campoPassword.getText().toString();
+                        String repitePassword = campoRepitePassword.getText().toString();
                         String birthdate = campoBirthdate.getText().toString();
                         boolean policityCheck = checkboxPolitica.isChecked();
 
-                        if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() ||  birthdate.isEmpty() || !policityCheck) {
+                        if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repitePassword.isEmpty() ||  birthdate.isEmpty() || !policityCheck) {
                             runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Por favor, complete todos los campos y marque la política de privacidad", Toast.LENGTH_SHORT).show());
+                            return;
+                        }
+
+                        if (!password.equals(repitePassword)) {
+                            runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show());
                             return;
                         }
 
