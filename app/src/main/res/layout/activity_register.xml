@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:background="@color/principal"
@@ -16,6 +17,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/imagenLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/logo"
+                android:layout_marginTop="32dp"/>
+
             <TextView
                 android:id="@+id/textoIniciarSesion"
                 android:layout_width="match_parent"
@@ -23,7 +31,7 @@
                 android:text="@string/register"
                 android:textSize="50sp"
                 android:textColor="@color/texto"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:textAlignment="center"
@@ -32,7 +40,7 @@
             <EditText
                 android:id="@+id/campoName"
                 android:layout_width="150dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:hint="@string/name"
                 android:textAlignment="center"
                 android:textColor="@color/texto"
@@ -40,15 +48,15 @@
                 android:ems="10"
                 android:inputType="text"
                 android:background="@drawable/edittext_fondo"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:autofillHints="name"/>
 
             <EditText
                 android:id="@+id/campoSurname"
-                android:layout_width="190dp"
-                android:layout_height="50dp"
+                android:layout_width="170dp"
+                android:layout_height="40dp"
                 android:hint="@string/surname"
                 android:textAlignment="center"
                 android:textColor="@color/texto"
@@ -56,7 +64,7 @@
                 android:ems="10"
                 android:inputType="text"
                 android:background="@drawable/edittext_fondo"
-                android:layout_marginTop="-50dp"
+                android:layout_marginTop="-40dp"
                 android:layout_marginStart="190dp"
                 android:layout_marginEnd="32dp"
                 android:autofillHints="surname"/>
@@ -64,9 +72,9 @@
             <EditText
                 android:id="@+id/campoUser"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:autofillHints="emailAddress"
                 android:background="@drawable/edittext_fondo"
@@ -79,8 +87,8 @@
 
             <EditText
                 android:id="@+id/campoPassword"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
                 android:hint="@string/password"
                 android:textAlignment="center"
                 android:textColor="@color/texto"
@@ -88,15 +96,31 @@
                 android:ems="10"
                 android:inputType="textPassword"
                 android:background="@drawable/edittext_fondo"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:autofillHints="password"/>
+
+            <EditText
+                android:id="@+id/campoRepitePassword"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:hint="@string/repeat_password"
+                android:textAlignment="center"
+                android:textColor="@color/texto"
+                android:textColorHint="@color/pistas"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:background="@drawable/edittext_fondo"
+                android:layout_marginTop="-40dp"
+                android:layout_marginStart="200dp"
                 android:layout_marginEnd="32dp"
                 android:autofillHints="password"/>
 
             <EditText
                 android:id="@+id/campoFecha"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:hint="@string/date"
                 android:textAlignment="center"
                 android:textColor="@color/texto"
@@ -104,7 +128,7 @@
                 android:ems="10"
                 android:inputType="date"
                 android:background="@drawable/edittext_fondo"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:autofillHints="birthdate"/>
