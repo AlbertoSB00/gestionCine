@@ -1,14 +1,18 @@
 <resources>
     <string name="app_name">GestionCine</string>
-    <string name="sign_in">Iniciar sesión</string>
+    <string name="sign_in">INICIAR SESIÓN</string>
+    <string name="sub_sign_in">Acceda a su cuenta de CINES AXION</string>
     <string name="email">correo</string>
     <string name="password">contraseña</string>
     <string name="repeat_password">repita contraseña</string>
-    <string name="forgot_password">¿Olvidaste la contraseña?</string>
+    <string name="forgot_password_login">¿Olvidaste la contraseña?</string>
+    <string name="forgot_password">OLVIDÉ MI CONTRASEÑA</string>
+    <string name="sub_forgot_password">No te preocupes, te ayudaremos a recuperarla</string>
     <string name="next">Siguiente</string>
     <string name="dont_have_account">No tengo una cuenta</string>
     <string name="register_now">Regístrate ahora</string>
-    <string name="register">Registrarse</string>
+    <string name="register">REGISTRARSE</string>
+    <string name="sub_register">Cree una cuenta de CINES AXION</string>
     <string name="name">nombre</string>
     <string name="surname">apellidos</string>
     <string name="date">fecha de nacimiento</string>

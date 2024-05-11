@@ -36,10 +36,11 @@ public class LoginActivity extends AppCompatActivity {
         campoPassword = findViewById(R.id.campoPassword);
         Button botonSiguiente = findViewById(R.id.botonSiguiente);
         TextView textoRegistrateAhora = findViewById(R.id.textoRegistrateAhora);
+        TextView textoOlvidastePassword = findViewById(R.id.textoOlvidastePassword);
 
-        // Al pulsar "Regístrate ahora".
-        textoRegistrateAhora.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        // Al pulsar "¿Olvidaste la contraseña?".
+        textoOlvidastePassword.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
             startActivity(intent);
         });
 
@@ -57,10 +58,12 @@ public class LoginActivity extends AppCompatActivity {
 
             ordenServer(user, passwordHashed);
         });
-    }
 
-    private void ordenServer(String user, String passwordHashed) {
-        new AuthenticationTask().execute("LOGIN", user, passwordHashed);
+        // Al pulsar "Regístrate ahora".
+        textoRegistrateAhora.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
     }
 
     // Método para cifrar la contraseña usando SHA-256
@@ -81,6 +84,10 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private void ordenServer(String user, String passwordHashed) {
+        new AuthenticationTask().execute("LOGIN", user, passwordHashed);
     }
 
     private class AuthenticationTask extends AsyncTask<String, Void, String> {
