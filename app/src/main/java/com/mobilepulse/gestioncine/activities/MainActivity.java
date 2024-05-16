@@ -15,6 +15,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mobilepulse.gestioncine.R;
+import com.mobilepulse.gestioncine.fragments.CommentFragment;
+import com.mobilepulse.gestioncine.fragments.DiscountFragment;
 import com.mobilepulse.gestioncine.fragments.HomeFragment;
 import com.mobilepulse.gestioncine.fragments.MovieFragment;
 import com.mobilepulse.gestioncine.fragments.ReserveFragment;
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View headerView = navigationView.getHeaderView(0);
         TextView userEmailTextView = headerView.findViewById(R.id.user_email_textview);
         userEmailTextView.setText(correo);
-
 
         MenuItem login = navigationView.getMenu().findItem(R.id.nav_login);
         MenuItem register = navigationView.getMenu().findItem(R.id.nav_register);
@@ -77,13 +78,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MovieFragment()).commit();
         }else if( itemId == R.id.nav_reserve ) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReserveFragment()).commit();
+        }else if(itemId == R.id.nav_comment) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommentFragment()).commit();
+        }else if(itemId == R.id.nav_discount) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DiscountFragment()).commit();
         }else if( itemId == R.id.nav_settings ) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
-        }else if( itemId == R.id.nav_register ) {
-            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-            startActivity(intent);
         }else if( itemId == R.id.nav_login ) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }else if( itemId == R.id.nav_register ) {
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         } else if( itemId == R.id.nav_logout ) {
             Intent intent = new Intent(MainActivity.this, MainActivity.class);

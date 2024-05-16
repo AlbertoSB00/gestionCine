@@ -25,6 +25,16 @@
                 android:title="@string/reserve" />
 
             <item
+                android:id="@+id/nav_comment"
+                android:icon="@drawable/nav_comment"
+                android:title="@string/comment"/>
+
+            <item
+                android:id="@+id/nav_discount"
+                android:icon="@drawable/nav_discount"
+                android:title="@string/discount"/>
+
+            <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/nav_settings"
                 android:title="@string/settings" />
