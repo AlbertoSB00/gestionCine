@@ -131,6 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             if (result.equals("REGISTER_SUCCESS")) {
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                intent.putExtra("CORREO", campoUser.getText().toString());
                 startActivity(intent);
 
             } else if (result.equals("REGISTER_FAILED")) {

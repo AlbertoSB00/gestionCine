@@ -126,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             if (result.equals("LOGIN_SUCCESS")) {
                 // Aquí puedes abrir la actividad principal de tu aplicación
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("CORREO", campoUser.getText().toString());
                 startActivity(intent);
 
             } else if (result.equals("LOGIN_FAILED")) {

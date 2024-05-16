@@ -3,7 +3,8 @@ package com.mobilepulse.gestioncine.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,12 +29,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        String correo = intent.getStringExtra("CORREO");
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView userEmailTextView = headerView.findViewById(R.id.user_email_textview);
+        userEmailTextView.setText(correo);
+
+
+        MenuItem login = navigationView.getMenu().findItem(R.id.nav_login);
+        MenuItem register = navigationView.getMenu().findItem(R.id.nav_register);
+        MenuItem logout = navigationView.getMenu().findItem(R.id.nav_logout);
+
+        if( !userEmailTextView.getText().equals("") ){
+            login.setVisible(false);
+            register.setVisible(false);
+            logout.setVisible(true);
+        }else{
+            login.setVisible(true);
+            register.setVisible(true);
+            logout.setVisible(false);
+        }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
@@ -63,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if( itemId == R.id.nav_login ) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
+        } else if( itemId == R.id.nav_logout ) {
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

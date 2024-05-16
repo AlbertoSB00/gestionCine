@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GestionCine</string>
+    <string name="app_name">Cines Axión</string>
     <string name="sign_in">INICIAR SESIÓN</string>
     <string name="sub_sign_in">Acceda a su cuenta de CINES AXION</string>
     <string name="email">correo</string>
@@ -21,4 +21,14 @@
     <string name="open_nav">Open Navigation Drawner</string>
     <string name="close_nav">Close Navigation Drawner</string>
     <string name="logo">logo</string>
+    <string name="menu">Menú</string>
+    <string name="home">Inicio</string>
+    <string name="movies">Películas</string>
+    <string name="reserve">Reservas</string>
+    <string name="settings">Ajustes</string>
+    <string name="join">Acceder</string>
+    <string name="signin">Iniciar sesión</string>
+    <string name="register_menu">Registrarse</string>
+    <string name="welcome">Bienvenido/a a la app de nuestro cine.</string>
+    <string name="logout">Cerrar sesión</string>
 </resources>

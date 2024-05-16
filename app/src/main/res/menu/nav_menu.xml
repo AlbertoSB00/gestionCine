@@ -4,43 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn = "navigation_view">
 
-    <group
-        android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/nav_home"
-            android:title="Inicio" />
-
-        <item
-            android:id="@+id/nav_movie"
-            android:icon="@drawable/nav_movie"
-            android:title="Películas" />
-
-        <item
-            android:id="@+id/nav_reserve"
-            android:icon="@drawable/nav_reserve"
-            android:title="Reservas" />
-
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/nav_settings"
-            android:title="Ajustes" />
-    </group>
-
     <item
-        android:title="">
+        android:title="@string/menu">
 
         <menu>
+
             <item
-                android:id="@+id/nav_register"
-                android:icon="@drawable/nav_login"
-                android:title="Registrarse" />
+                android:id="@+id/nav_home"
+                android:icon="@drawable/nav_home"
+                android:title="@string/home" />
+
+            <item
+                android:id="@+id/nav_movie"
+                android:icon="@drawable/nav_movie"
+                android:title="@string/movies" />
+
+            <item
+                android:id="@+id/nav_reserve"
+                android:icon="@drawable/nav_reserve"
+                android:title="@string/reserve" />
+
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/nav_settings"
+                android:title="@string/settings" />
+
+        </menu>
+
+    </item>
+
+    <item
+        android:title="@string/join">
+
+        <menu>
 
             <item
                 android:id="@+id/nav_login"
                 android:icon="@drawable/nav_login"
-                android:title="Iniciar sesión"/>
+                android:title="@string/signin"/>
+
+            <item
+                android:id="@+id/nav_register"
+                android:icon="@drawable/nav_register"
+                android:title="@string/register_menu" />
+
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/nav_logout"
+                android:title="@string/logout"
+                android:visible="false"/>
+
         </menu>
 
     </item>
