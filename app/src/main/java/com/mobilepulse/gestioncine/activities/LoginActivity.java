@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
+            // Verificar si el usuario existe en la bd.
             ordenServer(user, passwordHashed);
         });
 
@@ -90,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    // Método para enviar orden al servidor.
     private void ordenServer(String user, String passwordHashed) {
         executorService.execute(() -> {
             String response;
@@ -123,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // Método para manejar la respuesta del servidor.
     private void handleServerResponse(String result) {
         if ("LOGIN_SUCCESS".equals(result)) {
             // Aquí puedes abrir la actividad principal de tu aplicación

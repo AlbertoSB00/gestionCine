@@ -37,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // Asignando los campos.
         campoName = findViewById(R.id.campoName);
         campoSurname = findViewById(R.id.campoSurname);
         campoUser = findViewById(R.id.campoUser);
@@ -46,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         campoConsentimiento = findViewById(R.id.campoConsentimiento);
         Button botonSiguiente = findViewById(R.id.botonSiguiente);
 
+        // Creando el executor.
         executorService = Executors.newSingleThreadExecutor();
 
         // Al pulsar "Siguiente".
@@ -72,10 +74,12 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
+            // Enviamos orden al servidor.
             ordenServer(name, surname, email, passwordHashed, birthdate);
         });
     }
 
+    // Método para enviar orden al servidor.
     private void ordenServer(String name, String surname, String email, String passwordHashed, String birthdate) {
         executorService.execute(() -> {
             String response = authenticationTask("REGISTER", name, surname, email, passwordHashed, birthdate);
@@ -94,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    // Método para manejar la respuesta del servidor.
     private String authenticationTask(String... params) {
         String response;
         try {
@@ -146,6 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    // Metodo para cerrar el executor.
     @Override
     protected void onDestroy() {
         super.onDestroy();

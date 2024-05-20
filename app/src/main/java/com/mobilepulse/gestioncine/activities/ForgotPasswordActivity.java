@@ -78,10 +78,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             // Encriptar la contraseña.
             String passwordHashed = cifrarPassword(password);
 
+            // Actualiza la contraseña en la bd.
             ordenServer("UPDATE", correo, passwordHashed);
         });
     }
 
+    // Método para cifrar la contraseña usando SHA-256.
     public String cifrarPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -101,6 +103,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         }
     }
 
+    // Método para enviar orden al servidor.
     private void ordenServer(String orden, String correo, String passwordHashed) {
         executorService.execute(() -> {
             String response = "";
@@ -146,6 +149,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
     }
 
+    // Método para manejar la respuesta del servidor.
     private void handleServerResponse(String result) {
         switch (result) {
             case "FORGOT_SUCCESS":

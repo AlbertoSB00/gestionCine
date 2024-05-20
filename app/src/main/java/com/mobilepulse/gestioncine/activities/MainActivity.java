@@ -32,12 +32,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Obteniendo el correo de la actividad anterior.
         Intent intent = getIntent();
         String correo = intent.getStringExtra("CORREO");
 
+        // Asignando el correo a la barra de navegación.
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Asignando el correo a la barra de navegación.
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -45,10 +48,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView userEmailTextView = headerView.findViewById(R.id.user_email_textview);
         userEmailTextView.setText(correo);
 
+        // Asignando el correo a los items de la barra de navegación.
         MenuItem login = navigationView.getMenu().findItem(R.id.nav_login);
         MenuItem register = navigationView.getMenu().findItem(R.id.nav_register);
         MenuItem logout = navigationView.getMenu().findItem(R.id.nav_logout);
 
+        // Mostrando el correo y botones de acceso a la barra de navegación.
         if (!userEmailTextView.getText().toString().isEmpty()) {
             login.setVisible(false);
             register.setVisible(false);
@@ -59,15 +64,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             logout.setVisible(false);
         }
 
+        // Asignando el comportamiento de los items de la barra de navegación.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        // Asignando el comportamiento de los items de la barra de navegación.
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
+        // Asignando el comportamiento de los items de la barra de navegación.
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -87,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
+    // Asignando el comportamiento de los items de la barra de navegación.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int itemId = menuItem.getItemId();
