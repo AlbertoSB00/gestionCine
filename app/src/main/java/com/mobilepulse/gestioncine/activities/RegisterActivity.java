@@ -1,7 +1,6 @@
 package com.mobilepulse.gestioncine.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,6 +18,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -29,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText campoRepitePassword;
     private EditText campoFecha;
     private CheckBox campoConsentimiento;
+    private ExecutorService executorService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class RegisterActivity extends AppCompatActivity {
         campoConsentimiento = findViewById(R.id.campoConsentimiento);
         Button botonSiguiente = findViewById(R.id.botonSiguiente);
 
+        executorService = Executors.newSingleThreadExecutor();
+
         // Al pulsar "Siguiente".
         botonSiguiente.setOnClickListener(v -> {
             String name = campoName.getText().toString();
@@ -55,12 +59,15 @@ public class RegisterActivity extends AppCompatActivity {
             String birthdate = campoFecha.getText().toString();
             boolean consentimiento = campoConsentimiento.isChecked();
 
-            // Valimos campos.
+            // Validamos campos.
             if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repitePassword.isEmpty() || birthdate.isEmpty()) {
                 Toast.makeText(RegisterActivity.this, "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
                 return;
 
-            } else if( !consentimiento ) {
+            } else if (!password.equals(repitePassword)) {
+                Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden.", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (!consentimiento) {
                 Toast.makeText(RegisterActivity.this, "Por favor, acepte los términos y la política de privacidad.", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -70,7 +77,53 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void ordenServer(String name, String surname, String email, String passwordHashed, String birthdate) {
-        new AuthenticationTask().execute("REGISTER", name, surname, email, passwordHashed, birthdate);
+        executorService.execute(() -> {
+            String response = authenticationTask("REGISTER", name, surname, email, passwordHashed, birthdate);
+
+            runOnUiThread(() -> {
+                if (response.equals("REGISTER_SUCCESS")) {
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    intent.putExtra("CORREO", campoUser.getText().toString());
+                    startActivity(intent);
+                } else if (response.equals("REGISTER_FAILED")) {
+                    Toast.makeText(RegisterActivity.this, "Algo ha ido mal...", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+    }
+
+    private String authenticationTask(String... params) {
+        String response;
+        try {
+            Socket socket = new Socket("192.168.0.108", 12345);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            // Enviamos orden al servidor.
+            out.println(params[0]);
+
+            // Enviamos credenciales al servidor.
+            out.println(params[1]);
+            out.println(params[2]);
+            out.println(params[3]);
+            out.println(params[4]);
+            out.println(params[5]);
+
+            // Leemos respuesta.
+            response = in.readLine();
+
+            // Cerramos el socket.
+            out.close();
+            in.close();
+            socket.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return response;
     }
 
     // Método para cifrar la contraseña usando SHA-256
@@ -93,53 +146,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private class AuthenticationTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            String response;
-            try{
-                Socket socket = new Socket("192.168.0.108", 12345);
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                // Enviamos orden al servidor.
-                out.println(strings[0]);
-
-                // Enviamos credenciales al servidor.
-                out.println(strings[1]);
-                out.println(strings[2]);
-                out.println(strings[3]);
-                out.println(strings[4]);
-                out.println(strings[5]);
-
-                // Leemos respuesta.
-                response = in.readLine();
-
-                // Cerramos el socket.
-                out.close();
-                in.close();
-                socket.close();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result.equals("REGISTER_SUCCESS")) {
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                intent.putExtra("CORREO", campoUser.getText().toString());
-                startActivity(intent);
-
-            } else if (result.equals("REGISTER_FAILED")) {
-                Toast.makeText(RegisterActivity.this, "Algo ha ido mal...", Toast.LENGTH_SHORT).show();
-
-            } else {
-                Toast.makeText(RegisterActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
-            }
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown();
     }
 }

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.activity.OnBackPressedCallback;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mobilepulse.gestioncine.R;
@@ -48,11 +49,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuItem register = navigationView.getMenu().findItem(R.id.nav_register);
         MenuItem logout = navigationView.getMenu().findItem(R.id.nav_logout);
 
-        if( !userEmailTextView.getText().equals("") ){
+        if (!userEmailTextView.getText().toString().isEmpty()) {
             login.setVisible(false);
             register.setVisible(false);
             logout.setVisible(true);
-        }else{
+        } else {
             login.setVisible(true);
             register.setVisible(true);
             logout.setVisible(false);
@@ -62,10 +63,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        if( savedInstanceState == null ) {
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    // Si no hay ningún fragmento en el stack, cerrar la actividad
+                    if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                        finish();
+                    } else {
+                        // Si hay fragmentos en el stack, pop el último fragmento
+                        getSupportFragmentManager().popBackStack();
+                    }
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -98,14 +117,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 }
