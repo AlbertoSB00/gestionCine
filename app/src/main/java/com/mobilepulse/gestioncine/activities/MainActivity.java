@@ -52,15 +52,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuItem login = navigationView.getMenu().findItem(R.id.nav_login);
         MenuItem register = navigationView.getMenu().findItem(R.id.nav_register);
         MenuItem logout = navigationView.getMenu().findItem(R.id.nav_logout);
+        MenuItem admin = navigationView.getMenu().findItem(R.id.nav_admin);
 
         // Mostrando el correo y botones de acceso a la barra de navegación.
         if (!userEmailTextView.getText().toString().isEmpty()) {
             login.setVisible(false);
             register.setVisible(false);
+            admin.setVisible(false);
             logout.setVisible(true);
         } else {
             login.setVisible(true);
             register.setVisible(true);
+            admin.setVisible(true);
             logout.setVisible(false);
         }
 
@@ -102,23 +105,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if( itemId == R.id.nav_home ) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+
         } else if( itemId == R.id.nav_movie ) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MovieFragment()).commit();
+
         }else if( itemId == R.id.nav_reserve ) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReserveFragment()).commit();
+
         }else if(itemId == R.id.nav_comment) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommentFragment()).commit();
+
         }else if(itemId == R.id.nav_discount) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DiscountFragment()).commit();
+
         }else if( itemId == R.id.nav_settings ) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+
         }else if( itemId == R.id.nav_login ) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
+
         }else if( itemId == R.id.nav_register ) {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
-        } else if( itemId == R.id.nav_logout ) {
+
+        } else if(itemId == R.id.nav_admin) {
+            Intent intent = new Intent(MainActivity.this, LoginAdminActivity.class);
+            startActivity(intent);
+
+        }else if( itemId == R.id.nav_logout ) {
             Intent intent = new Intent(MainActivity.this, MainActivity.class);
             startActivity(intent);
             finish();

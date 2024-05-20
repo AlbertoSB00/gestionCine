@@ -36,4 +36,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="prueba_comment">prueba comment</string>
     <string name="prueba_discount">prueba discount</string>
+    <string name="admin_menu">Administración</string>
+    <string name="sub_sign_in_admin">Acceda como administrador a Cine Axion</string>
 </resources>
