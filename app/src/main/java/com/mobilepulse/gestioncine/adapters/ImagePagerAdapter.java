@@ -1,4 +1,4 @@
-package com.mobilepulse.gestioncine.fragments;
+package com.mobilepulse.gestioncine.adapters;
 
 import android.view.View;
 import android.view.ViewGroup;

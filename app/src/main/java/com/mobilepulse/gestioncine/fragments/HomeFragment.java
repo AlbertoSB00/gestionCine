@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.mobilepulse.gestioncine.R;
+import com.mobilepulse.gestioncine.adapters.ImagePagerAdapter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,7 +57,7 @@ public class HomeFragment extends Fragment {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 // Enviamos orden al servidor.
-                out.println("GET_IMAGE_PATHS");
+                out.println("GET_ALL_IMAGE_PATHS");
 
                 // Leemos respuesta.
                 String imagePath;
