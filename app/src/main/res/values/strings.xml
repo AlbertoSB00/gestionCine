@@ -38,4 +38,6 @@
     <string name="prueba_discount">prueba discount</string>
     <string name="admin_menu">Administración</string>
     <string name="sub_sign_in_admin">Acceda como administrador a Cine Axion</string>
+    <string name="novedades">NOVEDADES</string>
+    <string name="desliza">Desliza para ver más películas</string>
 </resources>
