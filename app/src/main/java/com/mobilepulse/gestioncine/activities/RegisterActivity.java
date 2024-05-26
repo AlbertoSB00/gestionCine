@@ -1,7 +1,10 @@
 package com.mobilepulse.gestioncine.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,6 +21,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -50,6 +57,49 @@ public class RegisterActivity extends AppCompatActivity {
         campoConsentimiento = findViewById(R.id.campoConsentimiento);
         Button botonSiguiente = findViewById(R.id.botonSiguiente);
 
+        // Añadir TextWatcher al campo de fecha.
+        campoFecha.addTextChangedListener(new TextWatcher() {
+            private boolean isFormatting;
+            private int previousLength;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                previousLength = s.length();
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // Verificar si estamos en el proceso de formateo.
+                if (isFormatting) {
+                    return;
+                }
+
+                int currentLength = s.length();
+                isFormatting = true;
+
+                // Formatear el texto si se agrega un nuevo carácter.
+                if (currentLength > previousLength && (currentLength == 2 || currentLength == 5)) {
+                    campoFecha.setText(s + "/");
+                    campoFecha.setSelection(campoFecha.getText().length());
+                }
+
+                // Eliminar la barra diagonal si se borra un carácter.
+                else if (currentLength < previousLength && (currentLength == 2 || currentLength == 5)) {
+                    campoFecha.setText(s.toString().substring(0, s.length() - 1));
+                    campoFecha.setSelection(campoFecha.getText().length());
+                }
+
+                isFormatting = false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Nada que hacer aquí.
+            }
+        });
+
         // Creando el executor.
         executorService = Executors.newSingleThreadExecutor();
 
@@ -72,8 +122,13 @@ public class RegisterActivity extends AppCompatActivity {
             } else if (!password.equals(repitePassword)) {
                 Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden.", Toast.LENGTH_SHORT).show();
                 return;
+
             } else if (!consentimiento) {
                 Toast.makeText(RegisterActivity.this, "Por favor, acepte los términos y la política de privacidad.", Toast.LENGTH_SHORT).show();
+                return;
+
+            } else if (!isValidDate(birthdate)) {
+                Toast.makeText(RegisterActivity.this, "La fecha de nacimiento es inválida.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -88,14 +143,24 @@ public class RegisterActivity extends AppCompatActivity {
             String response = authenticationTask("REGISTER", name, surname, email, passwordHashed, birthdate);
 
             runOnUiThread(() -> {
-                if (response.equals("REGISTER_SUCCESS")) {
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    intent.putExtra("CORREO", campoUser.getText().toString());
-                    startActivity(intent);
-                } else if (response.equals("REGISTER_FAILED")) {
-                    Toast.makeText(RegisterActivity.this, "Algo ha ido mal...", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(RegisterActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                switch (response) {
+                    case "REGISTER_SUCCESS":
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        intent.putExtra("CORREO", campoUser.getText().toString());
+                        startActivity(intent);
+                        break;
+
+                    case "REGISTER_FAILED":
+                        Toast.makeText(RegisterActivity.this, "Algo ha ido mal...", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case "NOT_VALID_EMAIL":
+                        Toast.makeText(RegisterActivity.this, "Correo no válido", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    default:
+                        Toast.makeText(RegisterActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                        break;
                 }
             });
         });
@@ -153,6 +218,40 @@ public class RegisterActivity extends AppCompatActivity {
             return null;
         }
     }
+
+// Método para validar la fecha de nacimiento
+public boolean isValidDate(String date) {
+    @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    sdf.setLenient(false);
+    try {
+        Date parsedDate = sdf.parse(date);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(parsedDate);
+
+        // Verificar si el día es válido para el mes y el año.
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int month = cal.get(Calendar.MONTH) + 1; // Se suma 1 porque los meses empiezan en 0.
+        int year = cal.get(Calendar.YEAR);
+
+        // Verificar febrero y años bisiestos.
+        if (month == 2) {
+            if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
+                return day <= 29;
+            } else {
+                return day <= 28;
+            }
+        }
+
+        // Verificar meses con 30 días.
+        if (month == 4 || month == 6 || month == 9 || month == 11) {
+            return day <= 30;
+        }
+
+        return true; // Resto de los meses.
+    } catch (ParseException e) {
+        return false; // La fecha no se pudo parsear correctamente.
+    }
+}
 
     // Metodo para cerrar el executor.
     @Override

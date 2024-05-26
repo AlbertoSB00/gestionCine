@@ -12,10 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.mobilepulse.gestioncine.R;
-import com.mobilepulse.gestioncine.adapters.ImagePagerAdapter;
 import com.mobilepulse.gestioncine.adapters.MovieAdapter;
 
 import java.io.BufferedReader;
@@ -24,7 +22,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -33,7 +30,6 @@ public class MovieFragment extends Fragment {
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Handler handler = new Handler(Looper.getMainLooper());
-    private ViewPager viewPager;
 
     private static final String IP = "192.168.0.108";
     private static final int PORT = 12345;
@@ -74,7 +70,7 @@ public class MovieFragment extends Fragment {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 // Enviamos orden al servidor.
-                out.println("GET_+18_IMAGES_PATH");
+                out.println("GET_MORE_18_IMAGES_PATH");
 
                 // Leemos respuesta y almacenamos las URLs en la lista correspondiente
                 String imagePath;
@@ -106,7 +102,7 @@ public class MovieFragment extends Fragment {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 // Enviamos orden al servidor.
-                out.println("GET_-18_IMAGES_PATH");
+                out.println("GET_MINUS_18_IMAGES_PATH");
 
                 // Leemos respuesta y almacenamos las URLs en la lista correspondiente
                 String imagePath;
