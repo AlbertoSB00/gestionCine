@@ -40,4 +40,7 @@
     <string name="sub_sign_in_admin">Acceda como administrador a Cine Axion</string>
     <string name="novedades">NOVEDADES</string>
     <string name="desliza">Desliza para ver más películas</string>
+    <string name="pelis_mayores">Películas para mayores</string>
+    <string name="pelis_jovenes">Películas para jóvenes</string>
+    <string name="pelis_niños">Películas para niños</string>
 </resources>
