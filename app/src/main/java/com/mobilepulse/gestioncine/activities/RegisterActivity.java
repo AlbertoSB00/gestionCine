@@ -1,10 +1,10 @@
 package com.mobilepulse.gestioncine.activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -34,11 +34,11 @@ public class RegisterActivity extends AppCompatActivity {
     private static final int PORT = 12345;
 
     private EditText campoName;
-    private EditText campoSurname;
     private EditText campoUser;
     private EditText campoPassword;
     private EditText campoRepitePassword;
-    private EditText campoFecha;
+    private DatePickerDialog datePickerDialog;
+    private Button campoFecha;
     private CheckBox campoConsentimiento;
     private ExecutorService executorService;
 
@@ -49,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Asignando los campos.
         campoName = findViewById(R.id.campoName);
-        campoSurname = findViewById(R.id.campoSurname);
         campoUser = findViewById(R.id.campoUser);
         campoPassword = findViewById(R.id.campoPassword);
         campoRepitePassword = findViewById(R.id.campoRepitePassword);
@@ -57,56 +56,18 @@ public class RegisterActivity extends AppCompatActivity {
         campoConsentimiento = findViewById(R.id.campoConsentimiento);
         Button botonSiguiente = findViewById(R.id.botonSiguiente);
 
-        // Añadir TextWatcher al campo de fecha.
-        campoFecha.addTextChangedListener(new TextWatcher() {
-            private boolean isFormatting;
-            private int previousLength;
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                previousLength = s.length();
-            }
-
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                // Verificar si estamos en el proceso de formateo.
-                if (isFormatting) {
-                    return;
-                }
-
-                int currentLength = s.length();
-                isFormatting = true;
-
-                // Formatear el texto si se agrega un nuevo carácter.
-                if (currentLength > previousLength && (currentLength == 2 || currentLength == 5)) {
-                    campoFecha.setText(s + "/");
-                    campoFecha.setSelection(campoFecha.getText().length());
-                }
-
-                // Eliminar la barra diagonal si se borra un carácter.
-                else if (currentLength < previousLength && (currentLength == 2 || currentLength == 5)) {
-                    campoFecha.setText(s.toString().substring(0, s.length() - 1));
-                    campoFecha.setSelection(campoFecha.getText().length());
-                }
-
-                isFormatting = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // Nada que hacer aquí.
-            }
-        });
+        // DatePicker.
+        initDatePicker();
 
         // Creando el executor.
         executorService = Executors.newSingleThreadExecutor();
 
+        // Mostrar el DatePicker al hacer clic en el botón de fecha.
+        campoFecha.setOnClickListener(v -> openDatePicker());
+
         // Al pulsar "Siguiente".
         botonSiguiente.setOnClickListener(v -> {
             String name = campoName.getText().toString();
-            String surname = campoSurname.getText().toString();
             String email = campoUser.getText().toString();
             String password = campoPassword.getText().toString();
             String repitePassword = campoRepitePassword.getText().toString();
@@ -115,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
             boolean consentimiento = campoConsentimiento.isChecked();
 
             // Validamos campos.
-            if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repitePassword.isEmpty() || birthdate.isEmpty()) {
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || repitePassword.isEmpty() || birthdate.isEmpty()) {
                 Toast.makeText(RegisterActivity.this, "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
                 return;
 
@@ -133,14 +94,37 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             // Enviamos orden al servidor.
-            ordenServer(name, surname, email, passwordHashed, birthdate);
+            ordenServer(name, email, passwordHashed, birthdate);
         });
     }
 
-    // Método para enviar orden al servidor.
-    private void ordenServer(String name, String surname, String email, String passwordHashed, String birthdate) {
+    private void initDatePicker(){
+        DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, dayOfMonth) -> {
+            month = month + 1;
+            String date = dayOfMonth + "/" + month + "/" + year;
+            campoFecha.setText(date);
+        };
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
+
+        // Establecer la fecha máxima en hoy
+        datePickerDialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
+    }
+
+    public void openDatePicker() {
+        datePickerDialog.show();
+    }
+
+    // Método para enviar orden al servidor.
+    private void ordenServer(String name, String email, String passwordHashed, String birthdate) {
         executorService.execute(() -> {
-            String response = authenticationTask("REGISTER", name, surname, email, passwordHashed, birthdate);
+            String response = authenticationTask("REGISTER", name, email, passwordHashed, birthdate);
 
             runOnUiThread(() -> {
                 switch (response) {
@@ -166,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    // Método para manejar la respuesta del servidor.
+    // Método para manejar la respuesta del servidor.
     private String authenticationTask(String... params) {
         String response;
         try {
@@ -182,7 +166,6 @@ public class RegisterActivity extends AppCompatActivity {
             out.println(params[2]);
             out.println(params[3]);
             out.println(params[4]);
-            out.println(params[5]);
 
             // Leemos respuesta.
             response = in.readLine();
@@ -219,41 +202,41 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-// Método para validar la fecha de nacimiento
-public boolean isValidDate(String date) {
-    @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    sdf.setLenient(false);
-    try {
-        Date parsedDate = sdf.parse(date);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(parsedDate);
+    // Método para validar la fecha de nacimiento
+    public boolean isValidDate(String date) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);
+        try {
+            Date parsedDate = sdf.parse(date);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(parsedDate);
 
-        // Verificar si el día es válido para el mes y el año.
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        int month = cal.get(Calendar.MONTH) + 1; // Se suma 1 porque los meses empiezan en 0.
-        int year = cal.get(Calendar.YEAR);
+            // Verificar si el día es válido para el mes y el año.
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            int month = cal.get(Calendar.MONTH) + 1; // Se suma 1 porque los meses empiezan en 0.
+            int year = cal.get(Calendar.YEAR);
 
-        // Verificar febrero y años bisiestos.
-        if (month == 2) {
-            if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
-                return day <= 29;
-            } else {
-                return day <= 28;
+            // Verificar febrero y años bisiestos.
+            if (month == 2) {
+                if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
+                    return day <= 29;
+                } else {
+                    return day <= 28;
+                }
             }
-        }
 
-        // Verificar meses con 30 días.
-        if (month == 4 || month == 6 || month == 9 || month == 11) {
-            return day <= 30;
-        }
+            // Verificar meses con 30 días.
+            if (month == 4 || month == 6 || month == 9 || month == 11) {
+                return day <= 30;
+            }
 
-        return true; // Resto de los meses.
-    } catch (ParseException e) {
-        return false; // La fecha no se pudo parsear correctamente.
+            return true; // Resto de los meses.
+        } catch (ParseException e) {
+            return false; // La fecha no se pudo parsear correctamente.
+        }
     }
-}
 
-    // Metodo para cerrar el executor.
+    // Método para cerrar el executor.
     @Override
     protected void onDestroy() {
         super.onDestroy();

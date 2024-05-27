@@ -36,6 +36,7 @@ public class MovieFragment extends Fragment {
 
     private RecyclerView mayor18;
     private RecyclerView menor18;
+    private RecyclerView kids;
 
     public MovieFragment() {
     }
@@ -50,6 +51,7 @@ public class MovieFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mayor18 = view.findViewById(R.id.mayor18);
         menor18 = view.findViewById(R.id.menor18);
+        kids = view.findViewById(R.id.kids);
         setupRecyclerView();
     }
 
@@ -57,10 +59,12 @@ public class MovieFragment extends Fragment {
         // Configurar el RecyclerView y el LayoutManager
         mayor18.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         menor18.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        kids.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
 
         // Listas para almacenar las URLs de las imágenes
         List<String> movieUrlsMayor18 = new ArrayList<>();
         List<String> movieUrlsMenor18 = new ArrayList<>();
+        List<String> movieUrlsKids = new ArrayList<>();
 
         // Lógica para obtener las URLs +18 del servidor
         executorService.execute(() -> {
@@ -123,6 +127,38 @@ public class MovieFragment extends Fragment {
                 // Crear y configurar el adaptador
                 MovieAdapter movieAdapter = new MovieAdapter(movieUrlsMenor18);
                 menor18.setAdapter(movieAdapter);
+            });
+        });
+
+        // Lógica para obtener las URLs para niños del servidor.
+        executorService.execute(() -> {
+            try {
+                Socket socket = new Socket(IP, PORT);
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+                // Enviamos orden al servidor.
+                out.println("GET_KIDS_IMAGES_PATH");
+
+                // Leemos respuesta y almacenamos las URLs en la lista correspondiente
+                String imagePath;
+                while ((imagePath = in.readLine()) != null) {
+                    movieUrlsKids.add(imagePath);
+                }
+
+                // Cerramos el socket.
+                out.close();
+                in.close();
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Actualizar el RecyclerView en el hilo principal
+            handler.post(() -> {
+                // Crear y configurar el adaptador
+                MovieAdapter movieAdapter = new MovieAdapter(movieUrlsKids);
+                kids.setAdapter(movieAdapter);
             });
         });
     }
