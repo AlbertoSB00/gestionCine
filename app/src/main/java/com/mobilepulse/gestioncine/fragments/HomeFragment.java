@@ -1,18 +1,22 @@
 package com.mobilepulse.gestioncine.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.mobilepulse.gestioncine.R;
+import com.mobilepulse.gestioncine.activities.MovieDataActivity;
 import com.mobilepulse.gestioncine.adapters.ImagePagerAdapter;
+import com.mobilepulse.gestioncine.interfaces.OnItemClickListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +29,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OnItemClickListener {
 
     private static final String IP = "192.168.0.108";
     private static final int PORT = 12345;
@@ -33,6 +37,8 @@ public class HomeFragment extends Fragment {
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Handler handler = new Handler(Looper.getMainLooper());
     private ViewPager viewPager;
+
+    private List<String> imageURLs;
 
     public HomeFragment() {
     }
@@ -81,12 +87,20 @@ public class HomeFragment extends Fragment {
     }
 
     private void handleServerResponse(String[] imagePaths) {
-        List<String> imageURLs = Arrays.asList(imagePaths);
+        imageURLs = Arrays.asList(imagePaths);
 
         // Crear un adaptador personalizado para cargar las imágenes en el ViewPager
-        ImagePagerAdapter pagerAdapter = new ImagePagerAdapter(imageURLs);
+        ImagePagerAdapter pagerAdapter = new ImagePagerAdapter(imageURLs, this); // Pasar el listener
 
         // Establecer el adaptador en el ViewPager
         viewPager.setAdapter(pagerAdapter);
+    }
+
+    // Manejamos las pulsaciones de las películas.
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(getActivity(), MovieDataActivity.class);
+        intent.putExtra("image_url", imageURLs.get(position));
+        startActivity(intent);
     }
 }

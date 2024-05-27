@@ -43,4 +43,7 @@
     <string name="pelis_mayores">Películas para mayores</string>
     <string name="pelis_jovenes">Películas para jóvenes</string>
     <string name="pelis_niños">Películas para niños</string>
+    <string name="pantalla">pantalla</string>
+    <string name="pulsa_para_info">Pulsa para ver más información de la película</string>
+    <string name="reserve_now">Reservar ahora</string>
 </resources>
