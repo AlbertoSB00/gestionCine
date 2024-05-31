@@ -8,19 +8,20 @@
     tools:context=".activities.MovieDataActivity">
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/tituloPrincipal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="DATOS DE LA PELÍCULA"
         android:textColor="@color/texto"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
 
     <TextView
         android:id="@+id/titulo"
@@ -36,14 +37,14 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="356dp"
         android:text="Título: "
         android:textColor="@color/texto"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/genero"
@@ -60,8 +61,8 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
         android:text="Género: "
         android:textColor="@color/texto"
         android:textSize="14sp"
@@ -84,8 +85,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
         android:text="Director: "
         android:textColor="@color/texto"
         android:textSize="14sp"
@@ -97,8 +98,8 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
         android:text="Duración (min): "
         android:textColor="@color/texto"
         android:textSize="14sp"
@@ -120,8 +121,8 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
         android:text="Clasificación de edad: "
         android:textColor="@color/texto"
         android:textSize="14sp"
@@ -144,8 +145,8 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
         android:text="Sinopsis: "
         android:textColor="@color/texto"
         android:textSize="14sp"
@@ -155,8 +156,8 @@
 
     <TextView
         android:id="@+id/descripcion"
-        android:layout_width="288dp"
-        android:layout_height="211dp"
+        android:layout_width="297dp"
+        android:layout_height="215dp"
 
         android:justificationMode="inter_word"
         android:text="sinopsis"
@@ -169,27 +170,28 @@
         android:id="@+id/pelicula"
         android:layout_width="166dp"
         android:layout_height="261dp"
+        android:layout_marginTop="80dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcion"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
+        app:layout_constraintHorizontal_bias="0.146"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/botonReservar"
         style="@android:style/Widget.Button"
-        android:layout_width="172dp"
-        android:layout_height="81dp"
+        android:layout_width="165dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="168dp"
         android:background="@color/boton"
         android:text="@string/reserve_now"
         android:textColor="@color/texto"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/pelicula"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -135,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("CORREO", campoUser.getText().toString());
             startActivity(intent);
+            finish();
 
         } else if ("LOGIN_FAILED".equals(result)) {
             Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();

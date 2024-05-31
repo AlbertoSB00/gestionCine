@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo"
+    tools:context=".activities.ReserveMovieActivity">
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RESERVAR SALA"
+        android:textColor="@color/texto"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Título de la película"
+        android:textColor="@color/texto"
+        android:textSize="22sp"
+        android:layout_below="@id/textViewTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <Spinner
+        android:id="@+id/spinnerSala"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/titulo"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_spinner"
+        android:paddingHorizontal="16dp"
+        android:entries="@array/opciones_sala" />
+
+    <Spinner
+        android:id="@+id/spinnerHorario"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/spinnerSala"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_spinner"
+        android:paddingHorizontal="16dp"
+        android:entries="@array/opciones_hora"/>
+
+    <!--
+    MOMENTO SELECCIONAR BUTACAS
+    -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/pantalla"
+            android:layout_marginTop="-120dp"
+            android:src="@drawable/screen" />
+
+        <GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="4"
+            android:layout_marginStart="-5dp"
+            android:layout_marginTop="128dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/butaca1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+            <Button
+                android:id="@+id/butaca2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+            <Button
+                android:id="@+id/butaca3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+            <Button
+                android:id="@+id/butaca4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+            <Button
+                android:id="@+id/butaca5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+            <Button
+                android:id="@+id/butaca6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+            <Button
+                android:id="@+id/butaca7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+            <Button
+                android:id="@+id/butaca8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+            <Button
+                android:id="@+id/butaca9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+            <Button
+                android:id="@+id/butaca10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+            <Button
+                android:id="@+id/butaca11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+            <Button
+                android:id="@+id/butaca12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/butaca_libre"
+                android:onClick="reservarButaca" />
+
+        </GridLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/buttonConfirmar"
+        android:layout_width="233dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerHorario"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="425dp"
+        android:background="@color/boton"
+        android:text="Proceder con el pago"
+        android:textColor="@color/texto"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

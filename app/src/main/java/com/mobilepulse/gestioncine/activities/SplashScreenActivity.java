@@ -36,7 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 // Iniciar la siguiente actividad cuando termine la animación
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
         });

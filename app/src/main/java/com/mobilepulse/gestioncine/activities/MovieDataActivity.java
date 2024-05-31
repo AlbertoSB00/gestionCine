@@ -1,8 +1,10 @@
 package com.mobilepulse.gestioncine.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -104,6 +106,15 @@ public class MovieDataActivity extends AppCompatActivity {
             directorTextView.setText(movieData[3]);
             duracionTextView.setText(movieData[4]);
             clasificacionTextView.setText(movieData[5]);
+
+            // Al pulsar el boton reservar.
+            Button botonReservar = findViewById(R.id.botonReservar);
+            botonReservar.setOnClickListener(v -> {
+                Intent intent = new Intent(this, ReserveMovieActivity.class);
+                intent.putExtra("titulo", movieData[0]);
+                intent.putExtra("correo", getIntent().getStringExtra("correo"));
+                startActivity(intent);
+            });
         }
     }
 

@@ -101,6 +101,8 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     public void onItemClick(int position) {
         Intent intent = new Intent(getActivity(), MovieDataActivity.class);
         intent.putExtra("image_url", imageURLs.get(position));
+        assert getArguments() != null;
+        intent.putExtra("correo", getArguments().getString("CORREO"));
         startActivity(intent);
     }
 }

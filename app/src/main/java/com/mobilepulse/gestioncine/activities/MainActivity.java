@@ -74,7 +74,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Asignando el comportamiento de los items de la barra de navegación.
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            Bundle bundle = new Bundle();
+            bundle.putString("CORREO", correo);
+
+            HomeFragment homeFragment = new HomeFragment();
+            homeFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, homeFragment)
+                    .commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
@@ -104,7 +112,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int itemId = menuItem.getItemId();
 
         if( itemId == R.id.nav_home ) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            Intent intent = getIntent();
+            String correo = intent.getStringExtra("CORREO");
+
+            Bundle bundle = new Bundle();
+            bundle.putString("CORREO", correo);
+
+            HomeFragment homeFragment = new HomeFragment();
+            homeFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, homeFragment)
+                    .commit();
 
         } else if( itemId == R.id.nav_movie ) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MovieFragment()).commit();
@@ -134,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
 
         }else if( itemId == R.id.nav_logout ) {
-            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         }
