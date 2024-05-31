@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Spinner;
@@ -21,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,11 +48,15 @@ public class ReserveMovieActivity extends AppCompatActivity {
         spinnerSala = findViewById(R.id.spinnerSala);
         spinnerHorario = findViewById(R.id.spinnerHorario);
 
-        // Obtener el titulo de la película.
+        // Obtener el título de la película.
         String titulo = getIntent().getStringExtra("titulo");
         String correo = getIntent().getStringExtra("correo");
         TextView textView = findViewById(R.id.titulo);
         textView.setText(titulo);
+
+        // Poblar los Spinners
+        loadSalaData();
+        loadHorarioData();
 
         // Al pulsar el botón "Proceder con el pago".
         Button buttonConfirmar = findViewById(R.id.buttonConfirmar);
@@ -71,7 +78,52 @@ public class ReserveMovieActivity extends AppCompatActivity {
                 }
             });
         });
+    }
 
+    private void loadSalaData() {
+        CompletableFuture.supplyAsync(() -> {
+            List<String> salas = new ArrayList<>();
+            try (Socket socket = new Socket(IP, PORT);
+                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+                out.println("GET_SALAS");
+                String response;
+                while ((response = in.readLine()) != null) {
+                    salas.add(response);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return salas;
+        }, executorService).thenAcceptAsync(salas -> {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, salas);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerSala.setAdapter(adapter);
+        }, handler::post);
+    }
+
+    private void loadHorarioData() {
+        CompletableFuture.supplyAsync(() -> {
+            List<String> horarios = new ArrayList<>();
+            try (Socket socket = new Socket(IP, PORT);
+                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+                out.println("GET_HORARIOS");
+                String response;
+                while ((response = in.readLine()) != null) {
+                    horarios.add(response);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return horarios;
+        }, executorService).thenAcceptAsync(horarios -> {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, horarios);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerHorario.setAdapter(adapter);
+        }, handler::post);
     }
 
     public void reservarButaca(View view) {
@@ -90,25 +142,20 @@ public class ReserveMovieActivity extends AppCompatActivity {
 
     private int contarButacasReservadas() {
         int count = 0;
-
         GridLayout gridLayout = findViewById(R.id.gridLayout);
-
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             View child = gridLayout.getChildAt(i);
             if (child instanceof Button) {
                 Button button = (Button) child;
                 Drawable background = button.getBackground();
                 Drawable reservedDrawable = getResources().getDrawable(R.drawable.butaca_ocupada);
-
                 if (background.getConstantState().equals(reservedDrawable.getConstantState())) {
                     count++;
                 }
             }
         }
-
         return count;
     }
-
 
     private CompletableFuture<Integer> obtenerIdUsuario(String correo) {
         return CompletableFuture.supplyAsync(() -> {
@@ -158,12 +205,12 @@ public class ReserveMovieActivity extends AppCompatActivity {
 
     private void reservar(int idUsuario, int idPelicula, Object idSala, Object idProyeccion, String estadoReserva, int butacasReservadas) {
         executorService.execute(() -> {
-            String response = authenticationTask(idUsuario, idPelicula, idSala, idProyeccion, estadoReserva, butacasReservadas);;
+            String response = authenticationTask(idUsuario, idPelicula, idSala, idProyeccion, estadoReserva, butacasReservadas);
 
             runOnUiThread(() -> {
                 switch (response) {
                     case "INSERT_MOVIE_SUCCESS":
-                        Toast.makeText(this, "Reserva realizada con exito", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Reserva realizada con éxito", Toast.LENGTH_SHORT).show();
                         break;
 
                     case "INSERT_MOVIE_FAILED":
@@ -203,7 +250,6 @@ public class ReserveMovieActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return response;
     }
 

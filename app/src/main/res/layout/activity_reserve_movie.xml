@@ -36,8 +36,7 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/bg_spinner"
-        android:paddingHorizontal="16dp"
-        android:entries="@array/opciones_sala" />
+        android:paddingHorizontal="16dp"/>
 
     <Spinner
         android:id="@+id/spinnerHorario"
@@ -47,12 +46,8 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/bg_spinner"
-        android:paddingHorizontal="16dp"
-        android:entries="@array/opciones_hora"/>
+        android:paddingHorizontal="16dp"/>
 
-    <!--
-    MOMENTO SELECCIONAR BUTACAS
-    -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
