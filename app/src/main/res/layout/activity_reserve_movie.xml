@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +10,7 @@
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RESERVAR SALA"
+        android:text="@string/reservar_sala"
         android:textColor="@color/texto"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -22,7 +21,7 @@
         android:id="@+id/titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Título de la película"
+        android:text="@string/titulo_pelicula"
         android:textColor="@color/texto"
         android:textSize="22sp"
         android:layout_below="@id/textViewTitle"
@@ -173,7 +172,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="425dp"
         android:background="@color/boton"
-        android:text="Proceder con el pago"
+        android:text="@string/proceder_con_el_pago"
         android:textColor="@color/texto"
         android:textSize="18sp"
         android:textStyle="bold" />

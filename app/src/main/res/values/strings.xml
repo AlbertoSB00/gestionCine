@@ -46,4 +46,21 @@
     <string name="pantalla">pantalla</string>
     <string name="pulsa_para_info">Pulsa para ver más información de la película</string>
     <string name="reserve_now">Reservar ahora</string>
+    <string name="reservar_sala">RESERVAR SALA</string>
+    <string name="titulo_pelicula">Título de la película</string>
+    <string name="proceder_con_el_pago">Proceder con el pago</string>
+    <string name="datos_de_la_pel_cula">DATOS DE LA PELÍCULA</string>
+    <string name="titulo">titulo</string>
+    <string name="t_tulo">Título:</string>
+    <string name="g_nero">género</string>
+    <string name="g_neroo">Género:</string>
+    <string name="director">director</string>
+    <string name="directorr">Director:</string>
+    <string name="duraci_n_min">Duración (min):</string>
+    <string name="duraci_n">duración</string>
+    <string name="clasificaci_n_de_edad">Clasificación de edad:</string>
+    <string name="clasificaci_n">clasificación</string>
+    <string name="sinopsis">Sinopsis:</string>
+    <string name="sinopsiss">sinopsis</string>
+    <string name="pelicula">pelicula</string>
 </resources>
