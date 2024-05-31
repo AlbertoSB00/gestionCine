@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -48,28 +49,34 @@ public class ReserveMovieActivity extends AppCompatActivity {
         spinnerSala = findViewById(R.id.spinnerSala);
         spinnerHorario = findViewById(R.id.spinnerHorario);
 
-        // Obtener el título de la película.
         String titulo = getIntent().getStringExtra("titulo");
         String correo = getIntent().getStringExtra("correo");
         TextView textView = findViewById(R.id.titulo);
         textView.setText(titulo);
 
-        // Poblar los Spinners
-        loadSalaData();
-        loadHorarioData();
+        // Poblar el spinner de salas y esperar a que el usuario seleccione una sala antes de cargar los horarios
+        loadSalaData(titulo);
+        spinnerSala.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String numeroSala = spinnerSala.getSelectedItem().toString();
+                loadHorarioData(numeroSala, titulo);
+            }
 
-        // Al pulsar el botón "Proceder con el pago".
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
         Button buttonConfirmar = findViewById(R.id.buttonConfirmar);
         buttonConfirmar.setOnClickListener(v -> {
-            // Obtener el estado de la reserva
             String estadoReserva = "Confirmada";
 
-            // Obtener el ID de usuario y de película de manera asíncrona
             CompletableFuture<Integer>[] futures = new CompletableFuture[2];
             futures[0] = obtenerIdUsuario(correo);
             futures[1] = obtenerIdPelicula(titulo);
 
-            // Cuando se completen ambos futures, realizar la reserva
             CompletableFuture.allOf(futures).thenAcceptAsync(result -> {
                 try {
                     reservar(futures[0].get(), futures[1].get(), spinnerSala.getSelectedItemId(), spinnerHorario.getSelectedItemId(), estadoReserva, contarButacasReservadas());
@@ -80,14 +87,16 @@ public class ReserveMovieActivity extends AppCompatActivity {
         });
     }
 
-    private void loadSalaData() {
+
+    private void loadSalaData(String tituloPelicula) {
         CompletableFuture.supplyAsync(() -> {
             List<String> salas = new ArrayList<>();
             try (Socket socket = new Socket(IP, PORT);
                  PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                  BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-                out.println("GET_SALAS");
+                out.println("GET_SALAS_FOR_MOVIE");
+                out.println(tituloPelicula); // Envía el título de la película al servidor
                 String response;
                 while ((response = in.readLine()) != null) {
                     salas.add(response);
@@ -103,14 +112,17 @@ public class ReserveMovieActivity extends AppCompatActivity {
         }, handler::post);
     }
 
-    private void loadHorarioData() {
+    private void loadHorarioData(String numeroSala, String tituloPelicula) {
         CompletableFuture.supplyAsync(() -> {
             List<String> horarios = new ArrayList<>();
             try (Socket socket = new Socket(IP, PORT);
                  PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                  BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-                out.println("GET_HORARIOS");
+                out.println("GET_HORARIOS_FOR_MOVIE");
+                out.println(numeroSala); // Envía el número de sala al servidor
+                out.println(tituloPelicula); // Envía el título de la película al servidor
+
                 String response;
                 while ((response = in.readLine()) != null) {
                     horarios.add(response);
