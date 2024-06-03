@@ -8,22 +8,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.mobilepulse.gestioncine.R;
+import com.mobilepulse.gestioncine.interfaces.OnItemClickListener;
 
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
     private final List<String> movieUrls;
+    private final OnItemClickListener onItemClickListener;
 
-    public MovieAdapter(List<String> movieUrls) {
+    public MovieAdapter(List<String> movieUrls, OnItemClickListener onItemClickListener) {
         this.movieUrls = movieUrls;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, onItemClickListener);
     }
 
     @Override
@@ -39,12 +42,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movieUrls.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
+        OnItemClickListener onItemClickListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
+            this.onItemClickListener = onItemClickListener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onItemClickListener.onItemClick(getAdapterPosition());
         }
     }
 }

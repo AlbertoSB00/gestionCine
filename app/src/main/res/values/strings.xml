@@ -63,4 +63,12 @@
     <string name="sinopsis">Sinopsis:</string>
     <string name="sinopsiss">sinopsis</string>
     <string name="pelicula">pelicula</string>
+    <string name="cambio_payment">Pulse en el desplegable para cambiar el método de pago</string>
+    <string name="email_recibe">correo para recibo</string>
+    <string name="tarjeta_numero">número de tarjeta</string>
+    <string name="date_expiration">fecha de expiración</string>
+    <string name="cvv">CVV</string>
+    <string name="phone_number">número de teléfono</string>
+    <string name="pago_taquilla">Pago en Taquilla - No se requiere información adicional</string>
+    <string name="confirmar_pago">Confirmar Pago</string>
 </resources>
