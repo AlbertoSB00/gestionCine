@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo"
+    android:background="@color/principal"
     tools:context=".activities.ReserveMovieActivity">
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_below="@id/titulo"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_spinner"
+        android:background="@drawable/edittext_fondo"
         android:paddingHorizontal="16dp"/>
 
     <Spinner
@@ -45,7 +45,7 @@
         android:layout_below="@id/spinnerSala"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_spinner"
+        android:background="@drawable/edittext_fondo"
         android:paddingHorizontal="16dp"/>
 
     <RelativeLayout

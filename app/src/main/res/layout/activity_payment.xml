@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/principal">
+
+    <TextView
+        android:id="@+id/textoLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/texto"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/textoSubLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cambio_payment"
+        android:textColor="@color/texto"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextEmailResguardo"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress"
+        android:textAlignment="center"
+        android:hint="@string/email_recibe"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edittext_fondo"
+        android:textColor="@color/texto"/>
+
+    <Spinner
+        android:id="@+id/spinnerPaymentMethod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/payment_methods"
+        android:layout_marginTop="32dp"/>
+
+    <LinearLayout
+        android:id="@+id/layoutCreditCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/editTextCardNumber"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:autofillHints="creditCardNumber"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:hint="@string/tarjeta_numero"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edittext_fondo"
+            android:textColor="@color/texto"/>
+
+        <EditText
+            android:id="@+id/editTextCardExpiry"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:autofillHints="creditCardExpirationDate"
+            android:inputType="date"
+            android:textAlignment="center"
+            android:hint="@string/date_expiration"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edittext_fondo"
+            android:textColor="@color/texto"/>
+
+        <EditText
+            android:id="@+id/editTextCardCVV"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:autofillHints="creditCardSecurityCode"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:hint="@string/cvv"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edittext_fondo"
+            android:textColor="@color/texto"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPaypal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/editTextPaypalEmail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:autofillHints="emailAddress"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            android:hint="@string/email"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edittext_fondo"
+            android:textColor="@color/texto"/>
+
+        <EditText
+            android:id="@+id/editTextPaypalPassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:autofillHints="password"
+            android:inputType="textPassword"
+            android:textAlignment="center"
+            android:hint="@string/password"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edittext_fondo"
+            android:textColor="@color/texto"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutBizum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/editTextBizumPhone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:autofillHints="phone"
+            android:inputType="phone"
+            android:textAlignment="center"
+            android:hint="@string/phone_number"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edittext_fondo"
+            android:textColor="@color/texto"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutCashDesk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/pago_taquilla"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/texto"/>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonConfirmPayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/confirmar_pago"
+        android:background="@color/boton"
+        android:layout_marginTop="32dp"/>
+
+</LinearLayout>

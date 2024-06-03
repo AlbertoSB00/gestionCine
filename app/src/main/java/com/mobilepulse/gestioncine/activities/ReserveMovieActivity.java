@@ -1,6 +1,7 @@
 package com.mobilepulse.gestioncine.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -215,54 +216,21 @@ public class ReserveMovieActivity extends AppCompatActivity {
         }, executorService);
     }
 
-    private void reservar(int idUsuario, int idPelicula, Object idSala, Object idProyeccion, String estadoReserva, int butacasReservadas) {
-        executorService.execute(() -> {
-            String response = authenticationTask(idUsuario, idPelicula, idSala, idProyeccion, estadoReserva, butacasReservadas);
-
-            runOnUiThread(() -> {
-                switch (response) {
-                    case "INSERT_MOVIE_SUCCESS":
-                        Toast.makeText(this, "Reserva realizada con éxito", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case "INSERT_MOVIE_FAILED":
-                        Toast.makeText(this, "Error al realizar la reserva", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            });
-        });
+    private void reservar(int idUsuario, int idPelicula, long idSala, long idProyeccion, String estadoReserva, int butacasReservadas) {
+        Intent intent = new Intent(this, PaymentActivity.class);
+        intent.putExtra("id_usuario", idUsuario);
+        intent.putExtra("id_pelicula", idPelicula);
+        intent.putExtra("id_sala", idSala);
+        intent.putExtra("id_proyeccion", idProyeccion);
+        intent.putExtra("estado_reserva", estadoReserva);
+        intent.putExtra("butacas_reservadas", butacasReservadas);
+        intent.putExtra("total_pagar", calcularTotal(butacasReservadas));
+        startActivity(intent);
     }
 
-    private String authenticationTask(int idUsuario, int idPelicula, Object idSala, Object idProyeccion, String estadoReserva, int butacasReservadas) {
-        String response = "";
-        try {
-            Socket socket = new Socket(IP, PORT);
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            // Enviamos orden al servidor.
-            out.println("INSERT_RESERVE");
-
-            // Enviamos datos al servidor.
-            out.println(idUsuario);
-            out.println(idPelicula);
-            out.println(idSala);
-            out.println(idProyeccion);
-            out.println(estadoReserva);
-            out.println(butacasReservadas);
-
-            // Leemos la respuesta.
-            response = in.readLine();
-
-            // Cerramos el socket.
-            out.close();
-            in.close();
-            socket.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return response;
+    private double calcularTotal(int butacasReservadas) {
+        double precioPorButaca = 7.0;
+        return butacasReservadas * precioPorButaca;
     }
 
     private void mostrarMensaje(String mensaje) {
