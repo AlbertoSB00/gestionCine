@@ -6,13 +6,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.activity.OnBackPressedCallback;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mobilepulse.gestioncine.R;
@@ -129,7 +129,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MovieFragment()).commit();
 
         }else if( itemId == R.id.nav_reserve ) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReserveFragment()).commit();
+            Intent intent = getIntent();
+            String correo = intent.getStringExtra("CORREO");
+
+            Bundle bundle = new Bundle();
+            bundle.putString("CORREO", correo);
+
+            ReserveFragment reserveFragment = new ReserveFragment();
+            reserveFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, reserveFragment)
+                    .commit();
 
         }else if(itemId == R.id.nav_comment) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommentFragment()).commit();
