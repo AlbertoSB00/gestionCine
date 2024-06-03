@@ -1,14 +1,117 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.DiscountFragment">
+    android:orientation="vertical"
+    android:background="@color/principal">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/prueba_discount"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:text="DESCUENTOS Y PROMOCIONES"
+        android:textColor="@color/texto"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="26sp" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Todas las tarifas y promociones que ofrecemos"
+        android:textColor="@color/texto"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp" />
+
+    <!-- Tarifa ordinaria -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tarifa ordinaria"
+        android:textColor="@color/texto"
+        android:textStyle="bold"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="16dp"
+        android:textSize="22sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Taquilla o web: 7€"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/texto"
+        android:textSize="14sp" />
+
+    <!-- Tarifa reducida -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tarifa reducida"
+        android:layout_marginTop="32dp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/texto"
+        android:textSize="22sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Menores de 18 años, mayores de 60 años, minusvalía, carnet estudiante, carnet joven, familia numerosa o monoparental: 6€"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/texto"
+        android:textSize="14sp" />
+
+    <!-- Tarifa matinales -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tarifa matinales"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/texto"
+        android:textSize="22sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sábado y domingo: 4,50€ (web) - 5,90€ (taquilla)"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/texto"
+        android:textSize="14sp" />
+
+    <!-- Tarifa miércoles -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tarifa miércoles"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/texto"
+        android:textSize="22sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Día del espectador: 4,50€ (Excepto festivos)"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/texto"
+        android:textSize="14sp" />
+
+    <!-- Suplemento alquiler de gafas 3D -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Suplemento alquiler de gafas 3D = 1,50€"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/texto"
+        android:textSize="18sp" />
+
+</LinearLayout>
