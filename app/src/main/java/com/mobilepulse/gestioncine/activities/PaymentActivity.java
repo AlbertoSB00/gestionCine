@@ -148,7 +148,7 @@ public class PaymentActivity extends AppCompatActivity {
                         && !paypalPassword.getText().toString().trim().isEmpty();
             case "Bizum":
                 return !bizumPhone.getText().toString().trim().isEmpty();
-            case "Pago en taquilla":
+            case "Cobro en taquilla":
                 // Para pago en taquilla no se requiere información adicional
                 return true;
             default:
