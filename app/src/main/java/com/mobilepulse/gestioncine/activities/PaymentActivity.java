@@ -39,6 +39,13 @@ public class PaymentActivity extends AppCompatActivity {
     private double totalPagar;
     private EditText emailFactura;
 
+    // Campos de tarjeta de crédito
+    private EditText creditCardNumber, creditCardName, creditCardExpiration, creditCardCVV;
+    // Campos de PayPal
+    private EditText paypalEmail, paypalPassword;
+    // Campos de Bizum
+    private EditText bizumPhone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +69,15 @@ public class PaymentActivity extends AppCompatActivity {
         layoutBizum = findViewById(R.id.layoutBizum);
         layoutCashDesk = findViewById(R.id.layoutCashDesk);
         Button buttonConfirmPayment = findViewById(R.id.buttonConfirmPayment);
+
+        // Inicializar campos específicos de métodos de pago
+        creditCardNumber = findViewById(R.id.editTextCardNumber);
+        creditCardName = findViewById(R.id.editTextCardNumber);
+        creditCardExpiration = findViewById(R.id.editTextCardExpiry);
+        creditCardCVV = findViewById(R.id.editTextCardCVV);
+        paypalEmail = findViewById(R.id.editTextPaypalEmail);
+        paypalPassword = findViewById(R.id.editTextPaypalPassword);
+        bizumPhone = findViewById(R.id.editTextBizumPhone);
 
         // Configurar el listener del spinner
         spinnerPaymentMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -96,6 +112,12 @@ public class PaymentActivity extends AppCompatActivity {
         buttonConfirmPayment.setOnClickListener(v -> {
             metodoPago = spinnerPaymentMethod.getSelectedItem().toString().trim();
 
+            // Validar los campos antes de enviar la orden
+            if (!validarCampos()) {
+                mostrarMensaje("Por favor, complete todos los campos obligatorios.");
+                return;
+            }
+
             ordenPayment(metodoPago, totalPagar, idUsuario);
         });
     }
@@ -107,6 +129,30 @@ public class PaymentActivity extends AppCompatActivity {
     private void ocultarLayouts(View... layouts) {
         for (View layout : layouts) {
             layout.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean validarCampos() {
+        if (emailFactura.getText().toString().trim().isEmpty()) {
+            return false;
+        }
+
+        switch (metodoPago) {
+            case "Tarjeta de crédito":
+                return !creditCardNumber.getText().toString().trim().isEmpty()
+                        && !creditCardName.getText().toString().trim().isEmpty()
+                        && !creditCardExpiration.getText().toString().trim().isEmpty()
+                        && !creditCardCVV.getText().toString().trim().isEmpty();
+            case "PayPal":
+                return !paypalEmail.getText().toString().trim().isEmpty()
+                        && !paypalPassword.getText().toString().trim().isEmpty();
+            case "Bizum":
+                return !bizumPhone.getText().toString().trim().isEmpty();
+            case "Pago en taquilla":
+                // Para pago en taquilla no se requiere información adicional
+                return true;
+            default:
+                return false;
         }
     }
 
