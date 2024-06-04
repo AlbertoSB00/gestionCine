@@ -56,31 +56,34 @@ public class ReserveFragment extends Fragment {
     }
 
     private void readReservesFromDB() {
-        executorService.execute(() ->{
-            try{
+        executorService.execute(() -> {
+            try {
                 Socket socket = new Socket(IP, PORT);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                // Enviamos orden al servidor.
+                // Enviar orden al servidor
                 out.println("GET_RESERVE");
 
-                // Enviamos el correo.
+                // Enviar el correo
                 out.println(getArguments().getString("CORREO"));
 
-                // Leemos la respuesta.
-                String response = in.readLine();
+                // Leer todas las líneas de respuesta
+                StringBuilder responseBuilder = new StringBuilder();
+                String line;
+                while ((line = in.readLine()) != null) {
+                    responseBuilder.append(line).append("\n");
+                }
+                String response = responseBuilder.toString().trim();
 
-                // Cerramos recursos
+                // Cerrar recursos
                 out.close();
                 in.close();
                 socket.close();
 
-                // Manejamos la respuesta
-                final String result = response;
-                handler.post(() -> handleServerResponse(result));
-
-            }catch (IOException e){
+                // Manejar la respuesta
+                handler.post(() -> handleServerResponse(response));
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
@@ -88,7 +91,9 @@ public class ReserveFragment extends Fragment {
 
     private void handleServerResponse(String response) {
         TableLayout tableLayout = requireView().findViewById(R.id.tableLayout);
-        tableLayout.removeAllViews(); // Limpiar la tabla antes de agregar nuevos datos
+
+        // Limpiar la tabla antes de agregar nuevos datos
+        tableLayout.removeAllViews();
 
         // Verificar si la respuesta no está vacía
         if (response != null && !response.isEmpty()) {
@@ -122,6 +127,4 @@ public class ReserveFragment extends Fragment {
             tableLayout.addView(row);
         }
     }
-
-
 }
