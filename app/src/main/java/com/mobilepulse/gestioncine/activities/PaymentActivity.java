@@ -35,10 +35,8 @@ public class PaymentActivity extends AppCompatActivity {
     private Spinner spinnerPaymentMethod;
     private LinearLayout layoutCreditCard, layoutPaypal, layoutBizum, layoutCashDesk;
     private int idUsuario, idPelicula, butacasReservadas;
-    private long idSala, idProyeccion;
-    private String estadoReserva;
+    private String estadoReserva, metodoPago, sala, hora;
     private double totalPagar;
-    private String metodoPago;
     private EditText emailFactura;
 
     @Override
@@ -50,8 +48,8 @@ public class PaymentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         idUsuario = intent.getIntExtra("id_usuario", -1);
         idPelicula = intent.getIntExtra("id_pelicula", -1);
-        idSala = intent.getLongExtra("id_sala", -1);
-        idProyeccion = intent.getLongExtra("id_proyeccion", -1);
+        sala = intent.getStringExtra("sala");
+        hora = intent.getStringExtra("hora");
         estadoReserva = intent.getStringExtra("estado_reserva");
         butacasReservadas = intent.getIntExtra("butacas_reservadas", 0);
         totalPagar = intent.getDoubleExtra("total_pagar", 0.0);
@@ -148,13 +146,13 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void procesarPago(String result) {
         if ("INSERT_TRANSACTION_SUCCESS".equals(result)) {
-            ordenReserve(idUsuario, idPelicula, idSala, idProyeccion, butacasReservadas);
+            ordenReserve(idUsuario, idPelicula, sala, hora, butacasReservadas);
         } else {
             mostrarMensaje("Error al realizar la reserva.");
         }
     }
 
-    private void ordenReserve(int idUsuario, int idPelicula, long idSala, long idProyeccion, int butacasReservadas) {
+    private void ordenReserve(int idUsuario, int idPelicula, String sala, String hora, int butacasReservadas) {
         executorService.execute(() -> {
             String response = "";
             try {
@@ -168,8 +166,8 @@ public class PaymentActivity extends AppCompatActivity {
                 // Enviamos datos al servidor.
                 out.println(idUsuario);
                 out.println(idPelicula);
-                out.println(idSala);
-                out.println(idProyeccion);
+                out.println(sala);
+                out.println(hora);
                 out.println(estadoReserva);
                 out.println(butacasReservadas);
 

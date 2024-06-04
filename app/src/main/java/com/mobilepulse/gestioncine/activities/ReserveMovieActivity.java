@@ -80,12 +80,16 @@ public class ReserveMovieActivity extends AppCompatActivity {
 
             CompletableFuture.allOf(futures).thenAcceptAsync(result -> {
                 try {
-                    reservar(futures[0].get(), futures[1].get(), spinnerSala.getSelectedItemId(), spinnerHorario.getSelectedItemId(), estadoReserva, contarButacasReservadas());
+                    // Obtén el valor seleccionado en lugar de la posición
+                    String numeroSala = spinnerSala.getSelectedItem().toString();
+                    String horario = spinnerHorario.getSelectedItem().toString();
+                    reservar(futures[0].get(), futures[1].get(), numeroSala, horario, estadoReserva, contarButacasReservadas());
                 } catch (Exception e) {
                     mostrarMensaje("Error al realizar la reserva: " + e.getMessage());
                 }
             });
         });
+
     }
 
 
@@ -216,12 +220,12 @@ public class ReserveMovieActivity extends AppCompatActivity {
         }, executorService);
     }
 
-    private void reservar(int idUsuario, int idPelicula, long idSala, long idProyeccion, String estadoReserva, int butacasReservadas) {
+    private void reservar(int idUsuario, int idPelicula, String sala, String hora, String estadoReserva, int butacasReservadas) {
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra("id_usuario", idUsuario);
         intent.putExtra("id_pelicula", idPelicula);
-        intent.putExtra("id_sala", idSala);
-        intent.putExtra("id_proyeccion", idProyeccion);
+        intent.putExtra("sala", sala);
+        intent.putExtra("hora", hora);
         intent.putExtra("estado_reserva", estadoReserva);
         intent.putExtra("butacas_reservadas", butacasReservadas);
         intent.putExtra("total_pagar", calcularTotal(butacasReservadas));
