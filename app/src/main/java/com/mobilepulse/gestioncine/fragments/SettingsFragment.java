@@ -28,7 +28,7 @@ public class SettingsFragment extends Fragment {
 
     private Switch switchNotifications;
     private Spinner spinnerLanguage;
-    private Button buttonChangeAccount, buttonSaveSettings;
+    private Button buttonSaveSettings;
 
     public SettingsFragment() {
         // Constructor vacío
@@ -51,17 +51,10 @@ public class SettingsFragment extends Fragment {
         // Inicializar vistas
         switchNotifications = view.findViewById(R.id.switchNotifications);
         spinnerLanguage = view.findViewById(R.id.spinnerLanguage);
-        buttonChangeAccount = view.findViewById(R.id.buttonChangeAccount);
         buttonSaveSettings = view.findViewById(R.id.buttonSaveSettings);
 
         // Cargar configuraciones
         loadSettings();
-
-        // Configurar listeners para los botones
-        buttonChangeAccount.setOnClickListener(v -> {
-            // Acción para cambiar la información de la cuenta
-            Toast.makeText(getActivity(), "Cambiar información de cuenta", Toast.LENGTH_SHORT).show();
-        });
 
         buttonSaveSettings.setOnClickListener(v -> saveSettings());
     }

@@ -47,22 +47,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/account"
-                android:textSize="18sp"
-                android:layout_marginTop="32dp"
-                android:textColor="@color/texto"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonChangeAccount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="@string/change_account_info"
-                android:background="@color/boton"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/language"
                 android:textSize="18sp"
                 android:layout_marginTop="32dp"
