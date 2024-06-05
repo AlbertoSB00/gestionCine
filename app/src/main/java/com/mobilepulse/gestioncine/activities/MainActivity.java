@@ -62,18 +62,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuItem login = navigationView.getMenu().findItem(R.id.nav_login);
         MenuItem register = navigationView.getMenu().findItem(R.id.nav_register);
         MenuItem logout = navigationView.getMenu().findItem(R.id.nav_logout);
-        MenuItem admin = navigationView.getMenu().findItem(R.id.nav_admin);
 
         // Mostrando el correo y botones de acceso a la barra de navegación.
         if (!userEmailTextView.getText().toString().isEmpty()) {
             login.setVisible(false);
             register.setVisible(false);
-            admin.setVisible(false);
             logout.setVisible(true);
         } else {
             login.setVisible(true);
             register.setVisible(true);
-            admin.setVisible(true);
             logout.setVisible(false);
         }
 
@@ -169,10 +166,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
 
-        } else if(itemId == R.id.nav_admin) {
-            Intent intent = new Intent(MainActivity.this, LoginAdminActivity.class);
-            startActivity(intent);
-
         }else if( itemId == R.id.nav_logout ) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -196,38 +189,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         config.setLocale(locale);
 
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-    }
-
-    private void setLocale(String langCode) {
-        int languageIndex = 0;
-        switch (langCode) {
-            case "es":
-                languageIndex = 0;
-                break;
-            case "en":
-                languageIndex = 1;
-                break;
-            case "fr":
-                languageIndex = 2;
-                break;
-            case "de":
-                languageIndex = 3;
-                break;
-        }
-
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("language", languageIndex);
-        editor.apply();
-
-        Locale locale = new Locale(langCode);
-        Locale.setDefault(locale);
-
-        Configuration config = new Configuration();
-        config.setLocale(locale);
-
-        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-
-        // Recrear la actividad para aplicar el nuevo idioma
-        recreate();
     }
 }

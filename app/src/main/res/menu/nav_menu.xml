@@ -59,11 +59,6 @@
                 android:title="@string/register_menu" />
 
             <item
-                android:id="@+id/nav_admin"
-                android:icon="@drawable/nav_admin"
-                android:title="@string/admin_menu" />
-
-            <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/nav_logout"
                 android:title="@string/logout"

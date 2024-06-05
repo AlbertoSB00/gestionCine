@@ -36,12 +36,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AdminActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.LoginAdminActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.ForgotPasswordActivity"
             android:exported="false" />
         <activity
