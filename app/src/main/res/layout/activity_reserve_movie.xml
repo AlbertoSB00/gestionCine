@@ -10,7 +10,7 @@
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/reservar_sala"
+        android:text="@string/reserve_room"
         android:textColor="@color/texto"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -21,7 +21,7 @@
         android:id="@+id/titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/titulo_pelicula"
+        android:text="@string/movie_title"
         android:textColor="@color/texto"
         android:textSize="22sp"
         android:layout_below="@id/textViewTitle"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:contentDescription="@string/pantalla"
+            android:contentDescription="@string/screen"
             android:layout_marginTop="-120dp"
             android:src="@drawable/screen" />
 
@@ -167,7 +167,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="425dp"
         android:background="@color/boton"
-        android:text="@string/proceder_con_el_pago"
+        android:text="@string/proceed_with_payment"
         android:textColor="@color/texto"
         android:textSize="18sp"
         android:textStyle="bold" />

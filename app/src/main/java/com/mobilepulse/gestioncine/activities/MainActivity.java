@@ -1,6 +1,9 @@
 package com.mobilepulse.gestioncine.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +26,8 @@ import com.mobilepulse.gestioncine.fragments.MovieFragment;
 import com.mobilepulse.gestioncine.fragments.ReserveFragment;
 import com.mobilepulse.gestioncine.fragments.SettingsFragment;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
@@ -31,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Cargar el lenguaje guardado por el usuario.
+        loadLanguagePreference();
 
         // Obteniendo el correo de la actividad anterior.
         Intent intent = getIntent();
@@ -171,5 +179,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void loadLanguagePreference() {
+        SharedPreferences prefs = getSharedPreferences("cine_prefs", Context.MODE_PRIVATE);
+        int languageIndex = prefs.getInt("language", 0);
+
+        String[] languageCodes = {"es", "en", "fr", "de"};
+        String selectedLanguage = languageCodes[languageIndex];
+
+        Locale locale = new Locale(selectedLanguage);
+        Locale.setDefault(locale);
+
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 }

@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="RESERVAS"
+        android:text="@string/reserves"
         android:textSize="28sp"
         android:textStyle="bold"
         android:textColor="@color/texto"/>
@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="A continuación se muestran tus reservas"
+        android:text="@string/sub_reserves"
         android:textSize="16sp"
         android:layout_marginTop="35dp"
         android:textColor="@color/texto"/>

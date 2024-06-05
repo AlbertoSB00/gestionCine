@@ -4,13 +4,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.SettingsFragment">
+    tools:context=".fragments.SettingsFragment"
+    android:padding="32dp"
+    android:background="@color/principal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="prueba settings"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_title"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:textColor="@color/texto"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notifications"
+                android:textSize="18sp"
+                android:textColor="@color/texto"
+                android:layout_marginTop="16dp"/>
+
+            <Switch
+                android:id="@+id/switchNotifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recieve_notifications"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/texto"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account"
+                android:textSize="18sp"
+                android:layout_marginTop="32dp"
+                android:textColor="@color/texto"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonChangeAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/change_account_info"
+                android:background="@color/boton"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/language"
+                android:textSize="18sp"
+                android:layout_marginTop="32dp"
+                android:textColor="@color/texto"/>
+
+            <Spinner
+                android:id="@+id/spinnerLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:entries="@array/languages"
+                android:background="@drawable/edittext_fondo"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/theme"
+                android:textSize="18sp"
+                android:layout_marginTop="32dp"
+                android:textColor="@color/texto"/>
+
+            <Spinner
+                android:id="@+id/spinnerTheme"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:entries="@array/themes"
+                android:background="@drawable/edittext_fondo"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonSaveSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save_configuration"
+                android:layout_marginTop="64dp"
+                android:background="@color/boton"/>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

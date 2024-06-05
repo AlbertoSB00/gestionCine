@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pelis_mayores"
+        android:text="@string/adults_movies"
         android:textColor="@color/texto"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -33,7 +33,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pelis_jovenes"
+        android:text="@string/young_movies"
         android:textColor="@color/texto"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -69,7 +69,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pelis_niños"
+        android:text="@string/kids_movies"
         android:textColor="@color/texto"
         android:textSize="24sp"
         android:textStyle="bold"

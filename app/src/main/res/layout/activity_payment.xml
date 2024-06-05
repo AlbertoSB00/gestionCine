@@ -21,7 +21,7 @@
         android:id="@+id/textoSubLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cambio_payment"
+        android:text="@string/payment_swap"
         android:textColor="@color/texto"
         android:textSize="14sp"
         android:layout_marginTop="8dp"
@@ -34,7 +34,7 @@
         android:autofillHints="emailAddress"
         android:inputType="textEmailAddress"
         android:textAlignment="center"
-        android:hint="@string/email_recibe"
+        android:hint="@string/invoice_email"
         android:layout_marginTop="16dp"
         android:background="@drawable/edittext_fondo"
         android:textColor="@color/texto"/>
@@ -60,7 +60,7 @@
             android:autofillHints="creditCardNumber"
             android:inputType="number"
             android:textAlignment="center"
-            android:hint="@string/tarjeta_numero"
+            android:hint="@string/card_number"
             android:layout_marginTop="16dp"
             android:background="@drawable/edittext_fondo"
             android:textColor="@color/texto"/>
@@ -152,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="@string/pago_taquilla"
+            android:text="@string/box_office_payment"
             android:layout_marginTop="16dp"
             android:textColor="@color/texto"/>
     </LinearLayout>
@@ -161,7 +161,7 @@
         android:id="@+id/buttonConfirmPayment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/confirmar_pago"
+        android:text="@string/confirm_payment"
         android:background="@color/boton"
         android:layout_marginTop="32dp"/>
 
