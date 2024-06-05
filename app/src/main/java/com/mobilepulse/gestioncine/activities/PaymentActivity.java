@@ -1,5 +1,6 @@
 package com.mobilepulse.gestioncine.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +47,7 @@ public class PaymentActivity extends AppCompatActivity {
     // Campos de Bizum
     private EditText bizumPhone;
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

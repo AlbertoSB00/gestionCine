@@ -1,11 +1,11 @@
 package com.mobilepulse.gestioncine.classes;
 
 public class Comment {
-    private String userName;
-    private int rating;
-    private String comment;
-    private String dateTime;
-    private String imageUrl;
+    private final String userName;
+    private final int rating;
+    private final String comment;
+    private final String dateTime;
+    private final String imageUrl;
 
     // Constructor
     public Comment(String userName, int rating, String comment, String dateTime, String imageUrl) {

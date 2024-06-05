@@ -1,5 +1,6 @@
 package com.mobilepulse.gestioncine.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -40,7 +41,6 @@ public class ReserveFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String correo = getArguments().getString("CORREO");
     }
 
     @Override
@@ -89,6 +89,7 @@ public class ReserveFragment extends Fragment {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void handleServerResponse(String response) {
         TableLayout tableLayout = requireView().findViewById(R.id.tableLayout);
 

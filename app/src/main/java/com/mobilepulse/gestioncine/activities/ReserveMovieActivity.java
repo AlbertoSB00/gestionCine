@@ -143,6 +143,7 @@ public class ReserveMovieActivity extends AppCompatActivity {
         }, handler::post);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void reservarButaca(View view) {
         Button butaca = (Button) view;
         Drawable drawable = butaca.getBackground();
@@ -165,7 +166,7 @@ public class ReserveMovieActivity extends AppCompatActivity {
             if (child instanceof Button) {
                 Button button = (Button) child;
                 Drawable background = button.getBackground();
-                Drawable reservedDrawable = getResources().getDrawable(R.drawable.butaca_ocupada);
+                @SuppressLint("UseCompatLoadingForDrawables") Drawable reservedDrawable = getResources().getDrawable(R.drawable.butaca_ocupada);
                 if (background.getConstantState().equals(reservedDrawable.getConstantState())) {
                     count++;
                 }

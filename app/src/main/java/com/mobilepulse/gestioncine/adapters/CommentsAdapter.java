@@ -18,8 +18,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
-    private List<Comment> commentList;
-    private Context context;
+    private final List<Comment> commentList;
+    private final Context context;
 
     public CommentsAdapter(Context context, List<Comment> commentList) {
         this.context = context;

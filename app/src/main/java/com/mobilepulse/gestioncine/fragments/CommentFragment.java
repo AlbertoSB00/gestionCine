@@ -1,5 +1,6 @@
 package com.mobilepulse.gestioncine.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -36,9 +37,8 @@ public class CommentFragment extends Fragment {
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Handler handler = new Handler(Looper.getMainLooper());
 
-    private RecyclerView recyclerViewComments;
     private CommentsAdapter commentsAdapter;
-    private List<Comment> commentList = new ArrayList<>();
+    private final List<Comment> commentList = new ArrayList<>();
 
     public CommentFragment() {}
 
@@ -53,7 +53,7 @@ public class CommentFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comment, container, false);
 
-        recyclerViewComments = view.findViewById(R.id.recyclerViewComments);
+        RecyclerView recyclerViewComments = view.findViewById(R.id.recyclerViewComments);
         recyclerViewComments.setLayoutManager(new LinearLayoutManager(getContext()));
         commentsAdapter = new CommentsAdapter(getContext(), commentList);
         recyclerViewComments.setAdapter(commentsAdapter);
@@ -98,6 +98,7 @@ public class CommentFragment extends Fragment {
     }
 
     // Método para manejar la respuesta del servidor y actualizar la lista de comentarios.
+    @SuppressLint("NotifyDataSetChanged")
     private void handleCommentsResponse(String result) {
         if (!"ERROR".equals(result)) {
             commentList.clear();

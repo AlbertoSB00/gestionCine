@@ -1,5 +1,6 @@
 package com.mobilepulse.gestioncine.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -26,9 +27,9 @@ public class SettingsFragment extends Fragment {
     private static final String PREF_NOTIFICATIONS = "notifications";
     private static final String PREF_LANGUAGE = "language";
 
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch switchNotifications;
     private Spinner spinnerLanguage;
-    private Button buttonSaveSettings;
 
     public SettingsFragment() {
         // Constructor vacío
@@ -51,7 +52,7 @@ public class SettingsFragment extends Fragment {
         // Inicializar vistas
         switchNotifications = view.findViewById(R.id.switchNotifications);
         spinnerLanguage = view.findViewById(R.id.spinnerLanguage);
-        buttonSaveSettings = view.findViewById(R.id.buttonSaveSettings);
+        Button buttonSaveSettings = view.findViewById(R.id.buttonSaveSettings);
 
         // Cargar configuraciones
         loadSettings();
