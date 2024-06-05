@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Cines Axión</string>
+    <string name="app_name">PopFlix</string>
     <string name="sign_in">SIGN IN</string>
-    <string name="sub_sign_in">Access your CINES AXION account</string>
+    <string name="sub_sign_in">Access your PopFlix account</string>
     <string name="email">email</string>
     <string name="password">password</string>
     <string name="repeat_password">repeat password</string>
@@ -12,7 +12,7 @@
     <string name="dont_have_account">I don\'t have an account</string>
     <string name="register_now">Register now</string>
     <string name="register">REGISTER</string>
-    <string name="sub_register">Create a CINES AXION account</string>
+    <string name="sub_register">Create a PopFlix account</string>
     <string name="name">name</string>
     <string name="surname">surname</string>
     <string name="date">date of birth</string>
@@ -36,7 +36,7 @@
     <string name="prueba_comment">test comment</string>
     <string name="prueba_discount">test discount</string>
     <string name="admin_menu">Administration</string>
-    <string name="sub_sign_in_admin">Access as an administrator to Cine Axion</string>
+    <string name="sub_sign_in_admin">Access as an administrator to PopFlix</string>
     <string name="news">NEWS</string>
     <string name="slide">Swipe to see more movies</string>
     <string name="adults_movies">Movies for adults</string>

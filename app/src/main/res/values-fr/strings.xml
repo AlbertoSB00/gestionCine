@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Cines Axión</string>
+    <string name="app_name">PopFlix</string>
     <string name="sign_in">SE CONNECTER</string>
-    <string name="sub_sign_in">Accédez à votre compte CINES AXION</string>
+    <string name="sub_sign_in">Accédez à votre compte PopFlix</string>
     <string name="email">courriel</string>
     <string name="password">mot de passe</string>
     <string name="repeat_password">répéter le mot de passe</string>
@@ -12,7 +12,7 @@
     <string name="dont_have_account">Je n\'ai pas de compte</string>
     <string name="register_now">Inscrivez-vous maintenant</string>
     <string name="register">S\'INSCRIRE</string>
-    <string name="sub_register">Créez un compte CINES AXION</string>
+    <string name="sub_register">Créez un compte PopFlix</string>
     <string name="name">nom</string>
     <string name="surname">prénom</string>
     <string name="date">date de naissance</string>
@@ -36,7 +36,7 @@
     <string name="prueba_comment">commentaire de test</string>
     <string name="prueba_discount">réduction de test</string>
     <string name="admin_menu">Administration</string>
-    <string name="sub_sign_in_admin">Accédez comme administrateur à Cine Axion</string>
+    <string name="sub_sign_in_admin">Accédez comme administrateur à PopFlix</string>
     <string name="news">NOUVEAUTÉS</string>
     <string name="slide">Glissez pour voir plus de films</string>
     <string name="adults_movies">Films pour adultes</string>
