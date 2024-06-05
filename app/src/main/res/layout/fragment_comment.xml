@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/principal"
     tools:context=".fragments.CommentFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewComments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/prueba_comment"
-        android:gravity="center"/>
+        android:layout_margin="8dp"
+        tools:listitem="@layout/item_comment" />
 
 </FrameLayout>
