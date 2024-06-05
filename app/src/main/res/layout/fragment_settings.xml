@@ -76,22 +76,6 @@
                 android:entries="@array/languages"
                 android:background="@drawable/edittext_fondo"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/theme"
-                android:textSize="18sp"
-                android:layout_marginTop="32dp"
-                android:textColor="@color/texto"/>
-
-            <Spinner
-                android:id="@+id/spinnerTheme"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="5dp"
-                android:entries="@array/themes"
-                android:background="@drawable/edittext_fondo"/>
-
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonSaveSettings"
                 android:layout_width="match_parent"

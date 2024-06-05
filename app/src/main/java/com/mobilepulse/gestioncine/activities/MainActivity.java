@@ -31,6 +31,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         // Cargar el lenguaje guardado por el usuario.
+        prefs = getSharedPreferences("cine_prefs", Context.MODE_PRIVATE);
         loadLanguagePreference();
 
         // Obteniendo el correo de la actividad anterior.
@@ -182,7 +184,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void loadLanguagePreference() {
-        SharedPreferences prefs = getSharedPreferences("cine_prefs", Context.MODE_PRIVATE);
         int languageIndex = prefs.getInt("language", 0);
 
         String[] languageCodes = {"es", "en", "fr", "de"};
@@ -195,5 +196,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         config.setLocale(locale);
 
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+    }
+
+    private void setLocale(String langCode) {
+        int languageIndex = 0;
+        switch (langCode) {
+            case "es":
+                languageIndex = 0;
+                break;
+            case "en":
+                languageIndex = 1;
+                break;
+            case "fr":
+                languageIndex = 2;
+                break;
+            case "de":
+                languageIndex = 3;
+                break;
+        }
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("language", languageIndex);
+        editor.apply();
+
+        Locale locale = new Locale(langCode);
+        Locale.setDefault(locale);
+
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+        // Recrear la actividad para aplicar el nuevo idioma
+        recreate();
     }
 }
