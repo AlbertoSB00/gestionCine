@@ -150,7 +150,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .commit();
 
         }else if(itemId == R.id.nav_comment) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommentFragment()).commit();
+            Intent intent = getIntent();
+            String correo = intent.getStringExtra("CORREO");
+
+            Bundle bundle = new Bundle();
+            bundle.putString("CORREO", correo);
+
+            CommentFragment commentFragment = new CommentFragment();
+            commentFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, commentFragment)
+                    .commit();
 
         }else if(itemId == R.id.nav_discount) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DiscountFragment()).commit();

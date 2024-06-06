@@ -1,12 +1,14 @@
 package com.mobilepulse.gestioncine.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobilepulse.gestioncine.R;
+import com.mobilepulse.gestioncine.activities.AddCommentActivity;
 import com.mobilepulse.gestioncine.adapters.CommentsAdapter;
 import com.mobilepulse.gestioncine.classes.Comment;
 
@@ -57,6 +60,9 @@ public class CommentFragment extends Fragment {
         recyclerViewComments.setLayoutManager(new LinearLayoutManager(getContext()));
         commentsAdapter = new CommentsAdapter(getContext(), commentList);
         recyclerViewComments.setAdapter(commentsAdapter);
+
+        Button addCommentButton = view.findViewById(R.id.addCommentButton);
+        addCommentButton.setOnClickListener(v -> openAddCommentActivity());
 
         loadComments(); // Método para cargar los comentarios desde la BD
 
@@ -120,4 +126,9 @@ public class CommentFragment extends Fragment {
         }
     }
 
+    private void openAddCommentActivity() {
+        Intent intent = new Intent(getActivity(), AddCommentActivity.class);
+        intent.putExtra("CORREO", getArguments().getString("CORREO"));
+        startActivity(intent);
+    }
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/principal"
+    android:padding="16dp"
+    tools:context=".activities.AddCommentActivity">
+
+    <TextView
+        android:id="@+id/tv_select_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elige una película:"
+        android:textColor="@color/texto"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_movie_slider"
+        android:layout_width="242dp"
+        android:layout_height="337dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tu comentario:"
+        android:textSize="18sp"
+        android:textColor="@color/texto"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <EditText
+        android:id="@+id/et_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Escribe tu comentario aquí"
+        android:textColor="@color/texto"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calificación:"
+        android:textSize="18sp"
+        android:textColor="@color/texto"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <RatingBar
+        android:id="@+id/rb_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:layout_gravity="center_horizontal"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enviar"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/texto"
+        android:background="@color/boton"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>
