@@ -91,4 +91,10 @@
     <string name="language">Langue</string>
     <string name="theme">Thème</string>
     <string name="save_configuration">Enregistrer les paramètres</string>
+    <string name="add_comment">Ajouter un commentaire</string>
+    <string name="choose_movie">Choisissez un film:</string>
+    <string name="your_comment">Votre commentaire:</string>
+    <string name="write_comment_here">Écrivez votre commentaire ici</string>
+    <string name="rating">Évaluation:</string>
+    <string name="send">Envoyer</string>
 </resources>

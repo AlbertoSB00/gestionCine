@@ -91,4 +91,10 @@
     <string name="language">Language</string>
     <string name="theme">Theme</string>
     <string name="save_configuration">Save Settings</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="choose_movie">Choose a movie:</string>
+    <string name="your_comment">Your comment:</string>
+    <string name="write_comment_here">Write your comment here</string>
+    <string name="rating">Rating:</string>
+    <string name="send">Send</string>
 </resources>

@@ -28,7 +28,7 @@
         android:id="@+id/addCommentButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="Añadir Comentario"
+        android:text="@string/add_comment"
         android:background="@color/boton"
         android:textColor="@color/texto"
         android:textSize="18sp"
