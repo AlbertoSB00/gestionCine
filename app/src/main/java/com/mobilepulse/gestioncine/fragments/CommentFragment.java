@@ -21,6 +21,7 @@ import com.mobilepulse.gestioncine.R;
 import com.mobilepulse.gestioncine.activities.AddCommentActivity;
 import com.mobilepulse.gestioncine.adapters.CommentsAdapter;
 import com.mobilepulse.gestioncine.classes.Comment;
+import com.mobilepulse.gestioncine.classes.Configuration;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,8 +35,8 @@ import java.util.concurrent.Executors;
 
 public class CommentFragment extends Fragment {
 
-    private static final String IP = "192.168.0.108";
-    private static final int PORT = 12345;
+    private static final String IP = Configuration.IP;
+    private static final int PORT = Configuration.PORT;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Handler handler = new Handler(Looper.getMainLooper());
