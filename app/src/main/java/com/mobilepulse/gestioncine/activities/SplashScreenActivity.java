@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mobilepulse.gestioncine.databinding.ActivitySplashScreenBinding;
 
+/**
+ * Actividad de SplashScreen que muestra una animación de fundido al iniciar la aplicación.
+ * Cuando la animación termina, la actividad LoginActivity se inicia y la actividad SplashScreen se cierra.
+ */
 @SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -29,6 +33,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         fadeIn();
     }
 
+    /**
+     * Aplica una animación de fundido a la vista principal.
+     * Cuando la animación termina, inicia la siguiente actividad (LoginActivity) y cierra esta actividad.
+     */
     private void fadeIn() {
         // Aplicar la animación de fundido a la vista principal
         mContentView.setAlpha(0f);

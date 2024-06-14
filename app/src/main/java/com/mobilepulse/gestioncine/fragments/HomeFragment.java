@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Fragmento para mostrar la pantalla de inicio con una vista de carrusel de imágenes de películas.
+ */
 public class HomeFragment extends Fragment implements OnItemClickListener {
 
     private static final String IP = Configuration.IP;
@@ -41,14 +44,31 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
 
     private List<String> imageURLs;
 
+    /**
+     * Constructor público de la clase HomeFragment.
+     */
     public HomeFragment() {
     }
 
+    /**
+     * Método para crear la vista del fragmento.
+     *
+     * @param inflater           El inflador de la vista.
+     * @param container          El contenedor de la vista.
+     * @param savedInstanceState Si no es nulo, este fragmento es una reanudación de un estado guardado anteriormente.
+     * @return La vista del fragmento.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
+    /**
+     * Llamado cuando la vista creada por {@link #onCreateView} ha sido preparada para mostrar al usuario.
+     *
+     * @param view               La vista raíz del fragmento.
+     * @param savedInstanceState Si no es nulo, este fragmento es una reanudación de un estado guardado anteriormente.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -56,6 +76,9 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         fetchImagePathsFromServer();
     }
 
+    /**
+     * Método para obtener las URL de las imágenes de las películas desde el servidor.
+     */
     private void fetchImagePathsFromServer() {
         executorService.execute(() -> {
             try {
@@ -87,17 +110,26 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         });
     }
 
+    /**
+     * Método para manejar la respuesta del servidor y actualizar la vista del carrusel de imágenes de películas.
+     *
+     * @param imagePaths Arreglo de strings que contiene las URL de las imágenes de las películas.
+     */
     private void handleServerResponse(String[] imagePaths) {
         imageURLs = Arrays.asList(imagePaths);
 
         // Crear un adaptador personalizado para cargar las imágenes en el ViewPager
-        ImagePagerAdapter pagerAdapter = new ImagePagerAdapter(imageURLs, this); // Pasar el listener
+        ImagePagerAdapter pagerAdapter = new ImagePagerAdapter(imageURLs, this);
 
         // Establecer el adaptador en el ViewPager
         viewPager.setAdapter(pagerAdapter);
     }
 
-    // Manejamos las pulsaciones de las películas.
+    /**
+     * Método para manejar la pulsación en una imagen de película en el carrusel.
+     *
+     * @param position La posición de la imagen de la película pulsada.
+     */
     @Override
     public void onItemClick(int position) {
         Intent intent = new Intent(getActivity(), MovieDataActivity.class);

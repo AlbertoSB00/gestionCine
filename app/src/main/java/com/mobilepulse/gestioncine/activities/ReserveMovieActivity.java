@@ -31,6 +31,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Actividad para reservar una película en un cine.
+ */
 public class ReserveMovieActivity extends AppCompatActivity {
 
     private static final String IP = Configuration.IP;
@@ -93,7 +96,11 @@ public class ReserveMovieActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Carga los datos de las salas disponibles para la película seleccionada.
+     *
+     * @param tituloPelicula El título de la película.
+     */
     private void loadSalaData(String tituloPelicula) {
         CompletableFuture.supplyAsync(() -> {
             List<String> salas = new ArrayList<>();
@@ -118,6 +125,12 @@ public class ReserveMovieActivity extends AppCompatActivity {
         }, handler::post);
     }
 
+    /**
+     * Carga los datos de los horarios disponibles para la sala y la película seleccionadas.
+     *
+     * @param numeroSala     El número de la sala seleccionada.
+     * @param tituloPelicula El título de la película.
+     */
     private void loadHorarioData(String numeroSala, String tituloPelicula) {
         CompletableFuture.supplyAsync(() -> {
             List<String> horarios = new ArrayList<>();
@@ -144,6 +157,11 @@ public class ReserveMovieActivity extends AppCompatActivity {
         }, handler::post);
     }
 
+    /**
+     * Maneja la acción de reservar una butaca.
+     *
+     * @param view La vista del botón de la butaca.
+     */
     @SuppressLint("UseCompatLoadingForDrawables")
     public void reservarButaca(View view) {
         Button butaca = (Button) view;
@@ -159,6 +177,11 @@ public class ReserveMovieActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Cuenta el número de butacas reservadas.
+     *
+     * @return El número de butacas reservadas.
+     */
     private int contarButacasReservadas() {
         int count = 0;
         GridLayout gridLayout = findViewById(R.id.gridLayout);
@@ -176,6 +199,12 @@ public class ReserveMovieActivity extends AppCompatActivity {
         return count;
     }
 
+    /**
+     * Obtiene el ID del usuario basado en su correo electrónico.
+     *
+     * @param correo El correo electrónico del usuario.
+     * @return Un CompletableFuture que devuelve el ID del usuario.
+     */
     private CompletableFuture<Integer> obtenerIdUsuario(String correo) {
         return CompletableFuture.supplyAsync(() -> {
             try (Socket socket = new Socket(IP, PORT);
@@ -199,6 +228,12 @@ public class ReserveMovieActivity extends AppCompatActivity {
         }, executorService);
     }
 
+    /**
+     * Obtiene el ID de la película basado en su título.
+     *
+     * @param titulo El título de la película.
+     * @return Un CompletableFuture que devuelve el ID de la película.
+     */
     private CompletableFuture<Integer> obtenerIdPelicula(String titulo) {
         return CompletableFuture.supplyAsync(() -> {
             try (Socket socket = new Socket(IP, PORT);
@@ -222,6 +257,16 @@ public class ReserveMovieActivity extends AppCompatActivity {
         }, executorService);
     }
 
+    /**
+     * Realiza la reserva de la película.
+     *
+     * @param idUsuario         El ID del usuario.
+     * @param idPelicula        El ID de la película.
+     * @param sala              El número de la sala.
+     * @param hora              El horario de la película.
+     * @param estadoReserva     El estado de la reserva.
+     * @param butacasReservadas El número de butacas reservadas.
+     */
     private void reservar(int idUsuario, int idPelicula, String sala, String hora, String estadoReserva, int butacasReservadas) {
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra("id_usuario", idUsuario);
@@ -234,11 +279,22 @@ public class ReserveMovieActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Calcula el total a pagar por la reserva.
+     *
+     * @param butacasReservadas El número de butacas reservadas.
+     * @return El total a pagar.
+     */
     private double calcularTotal(int butacasReservadas) {
         double precioPorButaca = 7.0;
         return butacasReservadas * precioPorButaca;
     }
 
+    /**
+     * Muestra un mensaje en la interfaz de usuario.
+     *
+     * @param mensaje El mensaje a mostrar.
+     */
     private void mostrarMensaje(String mensaje) {
         handler.post(() -> Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show());
     }

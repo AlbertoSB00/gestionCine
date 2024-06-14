@@ -26,6 +26,9 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Actividad para procesar los pagos de las reservas de películas.
+ */
 public class PaymentActivity extends AppCompatActivity {
 
     private static final String IP = Configuration.IP;
@@ -40,14 +43,15 @@ public class PaymentActivity extends AppCompatActivity {
     private String estadoReserva, metodoPago, sala, hora;
     private double totalPagar;
     private EditText emailFactura;
-
-    // Campos de tarjeta de crédito
     private EditText creditCardNumber, creditCardName, creditCardExpiration, creditCardCVV;
-    // Campos de PayPal
     private EditText paypalEmail, paypalPassword;
-    // Campos de Bizum
     private EditText bizumPhone;
 
+    /**
+     * Método llamado cuando la actividad es creada por primera vez.
+     *
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de haber sido previamente terminada, este Bundle contiene los datos que más recientemente suministró en onSaveInstanceState(Bundle). De lo contrario, está nulo.
+     */
     @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,19 +91,19 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0: // Tarjeta de Crédito
+                    case 0:
                         mostrarLayout(layoutCreditCard);
                         ocultarLayouts(layoutPaypal, layoutBizum, layoutCashDesk);
                         break;
-                    case 1: // PayPal
+                    case 1:
                         mostrarLayout(layoutPaypal);
                         ocultarLayouts(layoutCreditCard, layoutBizum, layoutCashDesk);
                         break;
-                    case 2: // Bizum
+                    case 2:
                         mostrarLayout(layoutBizum);
                         ocultarLayouts(layoutCreditCard, layoutPaypal, layoutCashDesk);
                         break;
-                    case 3: // Pago en Taquilla
+                    case 3:
                         mostrarLayout(layoutCashDesk);
                         ocultarLayouts(layoutCreditCard, layoutPaypal, layoutBizum);
                         break;
@@ -125,16 +129,31 @@ public class PaymentActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Muestra el layout específico para el método de pago seleccionado.
+     *
+     * @param layout El layout a mostrar.
+     */
     private void mostrarLayout(View layout) {
         layout.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Oculta los layouts que no son necesarios para el método de pago seleccionado.
+     *
+     * @param layouts Los layouts a ocultar.
+     */
     private void ocultarLayouts(View... layouts) {
         for (View layout : layouts) {
             layout.setVisibility(View.GONE);
         }
     }
 
+    /**
+     * Valida los campos de entrada según el método de pago seleccionado.
+     *
+     * @return true si todos los campos obligatorios están llenos, de lo contrario false.
+     */
     private boolean validarCampos() {
         if (emailFactura.getText().toString().trim().isEmpty()) {
             return false;
@@ -159,6 +178,13 @@ public class PaymentActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Envía la orden de pago al servidor.
+     *
+     * @param metodoPago El método de pago seleccionado.
+     * @param totalPagar La cantidad total a pagar.
+     * @param idUsuario  El ID del usuario.
+     */
     private void ordenPayment(String metodoPago, Double totalPagar, int idUsuario) {
         executorService.execute(() -> {
             String response = "";
@@ -193,6 +219,11 @@ public class PaymentActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Procesa la respuesta del servidor para la orden de pago.
+     *
+     * @param result La respuesta del servidor.
+     */
     private void procesarPago(String result) {
         if ("INSERT_TRANSACTION_SUCCESS".equals(result)) {
             ordenReserve(idUsuario, idPelicula, sala, hora, butacasReservadas);
@@ -201,6 +232,15 @@ public class PaymentActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Envía la orden de reserva al servidor.
+     *
+     * @param idUsuario         El ID del usuario.
+     * @param idPelicula        El ID de la película.
+     * @param sala              La sala de la película.
+     * @param hora              La hora de la película.
+     * @param butacasReservadas El número de butacas reservadas.
+     */
     private void ordenReserve(int idUsuario, int idPelicula, String sala, String hora, int butacasReservadas) {
         executorService.execute(() -> {
             String response = "";
@@ -237,6 +277,11 @@ public class PaymentActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Procesa la respuesta del servidor para la orden de reserva.
+     *
+     * @param result La respuesta del servidor.
+     */
     private void procesarReserva(String result) {
         if ("INSERT_MOVIE_SUCCESS".equals(result)) {
             mostrarMensaje("Reserva realizada con éxito.");
@@ -253,6 +298,11 @@ public class PaymentActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Muestra un mensaje en pantalla.
+     *
+     * @param mensaje El mensaje a mostrar.
+     */
     private void mostrarMensaje(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }

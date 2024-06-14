@@ -29,6 +29,9 @@ import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Actividad para registrar nuevos usuarios.
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String IP = Configuration.IP;
@@ -43,6 +46,11 @@ public class RegisterActivity extends AppCompatActivity {
     private CheckBox campoConsentimiento;
     private ExecutorService executorService;
 
+    /**
+     * Método llamado cuando la actividad es creada por primera vez.
+     *
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de haber sido previamente terminada, este Bundle contiene los datos que más recientemente suministró en onSaveInstanceState(Bundle). De lo contrario, está nulo.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +107,9 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Inicializa el DatePicker para seleccionar la fecha de nacimiento.
+     */
     private void initDatePicker(){
         DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, dayOfMonth) -> {
             month = month + 1;
@@ -118,11 +129,21 @@ public class RegisterActivity extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
     }
 
+    /**
+     * Abre el DatePicker para seleccionar la fecha de nacimiento.
+     */
     public void openDatePicker() {
         datePickerDialog.show();
     }
 
-    // Método para enviar orden al servidor.
+    /**
+     * Envía la orden de registro al servidor.
+     *
+     * @param name           El nombre del usuario.
+     * @param email          El correo electrónico del usuario.
+     * @param passwordHashed La contraseña cifrada del usuario.
+     * @param birthdate      La fecha de nacimiento del usuario.
+     */
     private void ordenServer(String name, String email, String passwordHashed, String birthdate) {
         executorService.execute(() -> {
             String response = authenticationTask("REGISTER", name, email, passwordHashed, birthdate);
@@ -151,7 +172,12 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    // Método para manejar la respuesta del servidor.
+    /**
+     * Maneja la respuesta del servidor para la orden de registro.
+     *
+     * @param params Los parámetros para la tarea de autenticación.
+     * @return La respuesta del servidor.
+     */
     private String authenticationTask(String... params) {
         String response;
         try {
@@ -183,7 +209,12 @@ public class RegisterActivity extends AppCompatActivity {
         return response;
     }
 
-    // Método para cifrar la contraseña usando SHA-256
+    /**
+     * Cifra la contraseña usando SHA-256.
+     *
+     * @param password La contraseña a cifrar.
+     * @return La contraseña cifrada en formato hexadecimal.
+     */
     public String cifrarPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -203,7 +234,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    // Método para validar la fecha de nacimiento
+    /**
+     * Valida la fecha de nacimiento.
+     *
+     * @param date La fecha de nacimiento en formato "dd/MM/yyyy".
+     * @return true si la fecha es válida, false de lo contrario.
+     */
     public boolean isValidDate(String date) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false);
@@ -237,7 +273,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    // Método para cerrar el executor.
+    /**
+     * Método llamado cuando la actividad está a punto de ser destruida.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

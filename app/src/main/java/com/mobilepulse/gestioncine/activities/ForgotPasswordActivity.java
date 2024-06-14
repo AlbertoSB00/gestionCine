@@ -25,6 +25,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Actividad para la recuperación de contraseñas olvidadas.
+ */
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     private static final String IP = Configuration.IP;
@@ -40,6 +43,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Handler handler = new Handler(Looper.getMainLooper());
 
+    /**
+     * Llamado cuando la actividad es creada por primera vez.
+     *
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de haber sido previamente terminada, este Bundle contiene los datos que más recientemente suministró en onSaveInstanceState(Bundle). De lo contrario, está nulo.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +95,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
     }
 
-    // Método para cifrar la contraseña usando SHA-256.
+    /**
+     * Método para cifrar la contraseña usando SHA-256.
+     *
+     * @param password La contraseña a cifrar.
+     * @return La contraseña cifrada en formato hexadecimal.
+     */
     public String cifrarPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -107,7 +120,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         }
     }
 
-    // Método para enviar orden al servidor.
+    /**
+     * Método para enviar una orden al servidor.
+     *
+     * @param orden La orden a enviar (e.g., "FORGOT", "UPDATE").
+     * @param correo El correo del usuario.
+     * @param passwordHashed La contraseña cifrada (solo para la orden "UPDATE").
+     */
     private void ordenServer(String orden, String correo, String passwordHashed) {
         executorService.execute(() -> {
             String response = "";
@@ -153,7 +172,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
     }
 
-    // Método para manejar la respuesta del servidor.
+    /**
+     * Método para manejar la respuesta del servidor.
+     *
+     * @param result La respuesta del servidor.
+     */
     private void handleServerResponse(String result) {
         switch (result) {
             case "FORGOT_SUCCESS":

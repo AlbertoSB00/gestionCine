@@ -21,6 +21,9 @@ import com.mobilepulse.gestioncine.R;
 
 import java.util.Locale;
 
+/**
+ * Fragmento para gestionar la configuración de la aplicación.
+ */
 public class SettingsFragment extends Fragment {
 
     private static final String PREFS_NAME = "cine_prefs";
@@ -31,20 +34,43 @@ public class SettingsFragment extends Fragment {
     private Switch switchNotifications;
     private Spinner spinnerLanguage;
 
+    /**
+     * Constructor público de la clase SettingsFragment.
+     */
     public SettingsFragment() {
         // Constructor vacío
     }
 
+    /**
+     * Método llamado cuando se crea el fragmento.
+     *
+     * @param savedInstanceState El Bundle que contiene el estado anteriormente guardado del fragmento.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Método llamado para crear la vista del fragmento.
+     *
+     * @param inflater           El LayoutInflater objeto que se puede utilizar para inflar cualquier vista en
+     *                           el fragmento.
+     * @param container          Si no es nulo, este es el ViewGroup al que se debe adjuntar la vista de fragmento.
+     * @param savedInstanceState Si no es nulo, este fragmento es una reanudación de un estado guardado anteriormente.
+     * @return La View para el fragmento, simplemente inflada según el archivo de diseño definido en XML.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
+    /**
+     * Método llamado después de que la vista del fragmento ha sido creada.
+     *
+     * @param view               La vista raíz del fragmento.
+     * @param savedInstanceState Si no es nulo, este fragmento es una reanudación de un estado guardado anteriormente.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -60,6 +86,9 @@ public class SettingsFragment extends Fragment {
         buttonSaveSettings.setOnClickListener(v -> saveSettings());
     }
 
+    /**
+     * Método para cargar la configuración guardada.
+     */
     private void loadSettings() {
         SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         switchNotifications.setChecked(prefs.getBoolean(PREF_NOTIFICATIONS, false));
@@ -68,6 +97,9 @@ public class SettingsFragment extends Fragment {
         spinnerLanguage.setSelection(languageIndex);
     }
 
+    /**
+     * Método para guardar la configuración actual.
+     */
     private void saveSettings() {
         SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -84,6 +116,11 @@ public class SettingsFragment extends Fragment {
         Toast.makeText(getActivity(), "Configuraciones guardadas", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Método para aplicar el idioma seleccionado.
+     *
+     * @param languageIndex El índice del idioma seleccionado en el spinner.
+     */
     private void applyLanguage(int languageIndex) {
         String[] languageCodes = {"es", "en", "fr", "de"};
         String selectedLanguage = languageCodes[languageIndex];

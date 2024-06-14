@@ -26,6 +26,9 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Fragmento para mostrar las reservas realizadas por el usuario.
+ */
 public class ReserveFragment extends Fragment {
 
     private static final String IP = Configuration.IP;
@@ -34,21 +37,44 @@ public class ReserveFragment extends Fragment {
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Handler handler = new Handler(Looper.getMainLooper());
 
+    /**
+     * Constructor público de la clase ReserveFragment.
+     */
     public ReserveFragment() {
 
     }
 
+    /**
+     * Método llamado cuando se crea el fragmento.
+     *
+     * @param savedInstanceState El Bundle que contiene el estado anteriormente guardado del fragmento.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+    /**
+     * Método llamado para crear la vista del fragmento.
+     *
+     * @param inflater           El LayoutInflater objeto que se puede utilizar para inflar cualquier vista en
+     *                           el fragmento.
+     * @param container          Si no es nulo, este es el ViewGroup al que se debe adjuntar la vista de fragmento.
+     * @param savedInstanceState Si no es nulo, este fragmento es una reanudación de un estado guardado anteriormente.
+     * @return La View para el fragmento, simplemente inflada según el archivo de diseño definido en XML.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_reserve, container, false);
     }
 
+    /**
+     * Método llamado después de que la vista del fragmento ha sido creada.
+     *
+     * @param view               La vista raíz del fragmento.
+     * @param savedInstanceState Si no es nulo, este fragmento es una reanudación de un estado guardado anteriormente.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -56,6 +82,9 @@ public class ReserveFragment extends Fragment {
         readReservesFromDB();
     }
 
+    /**
+     * Método para leer las reservas de la base de datos del servidor.
+     */
     private void readReservesFromDB() {
         executorService.execute(() -> {
             try {
@@ -90,6 +119,11 @@ public class ReserveFragment extends Fragment {
         });
     }
 
+    /**
+     * Método para manejar la respuesta del servidor y mostrar las reservas en una tabla.
+     *
+     * @param response La respuesta del servidor que contiene las reservas.
+     */
     @SuppressLint("SetTextI18n")
     private void handleServerResponse(String response) {
         TableLayout tableLayout = requireView().findViewById(R.id.tableLayout);

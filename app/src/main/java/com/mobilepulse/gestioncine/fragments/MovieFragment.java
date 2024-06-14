@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Fragmento que muestra una lista de películas dividida por categorías: +18, -18 y para niños.
+ */
 public class MovieFragment extends Fragment implements OnItemClickListener {
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
@@ -46,14 +49,31 @@ public class MovieFragment extends Fragment implements OnItemClickListener {
     private List<String> movieUrlsMenor18;
     private List<String> movieUrlsKids;
 
+    /**
+     * Constructor público de la clase MovieFragment.
+     */
     public MovieFragment() {
     }
 
+    /**
+     * Método para crear la vista del fragmento.
+     *
+     * @param inflater           El inflador de la vista.
+     * @param container          El contenedor de la vista.
+     * @param savedInstanceState Si no es nulo, este fragmento es una reanudación de un estado guardado anteriormente.
+     * @return La vista del fragmento.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_movie, container, false);
     }
 
+    /**
+     * Llamado cuando la vista creada por {@link #onCreateView} ha sido preparada para mostrar al usuario.
+     *
+     * @param view               La vista raíz del fragmento.
+     * @param savedInstanceState Si no es nulo, este fragmento es una reanudación de un estado guardado anteriormente.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -63,6 +83,9 @@ public class MovieFragment extends Fragment implements OnItemClickListener {
         setupRecyclerView();
     }
 
+    /**
+     * Configura los RecyclerViews para mostrar las películas en cada categoría.
+     */
     private void setupRecyclerView() {
         // Configurar el RecyclerView y el LayoutManager
         mayor18.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -84,7 +107,12 @@ public class MovieFragment extends Fragment implements OnItemClickListener {
         fetchMovieUrls("GET_KIDS_IMAGES_PATH", kids);
     }
 
-    // Elimina el segundo parámetro movieUrls y agrégalo a la lista correspondiente según la categoría
+    /**
+     * Método para obtener las URLs de las imágenes de las películas de una categoría desde el servidor.
+     *
+     * @param command     La orden a enviar al servidor para obtener las URLs.
+     * @param recyclerView El RecyclerView correspondiente a la categoría de películas.
+     */
     private void fetchMovieUrls(String command, RecyclerView recyclerView) {
         executorService.execute(() -> {
             List<String> movieUrls = new ArrayList<>(); // Lista temporal para almacenar las URLs de esta categoría
@@ -129,9 +157,13 @@ public class MovieFragment extends Fragment implements OnItemClickListener {
         });
     }
 
+    /**
+     * Método llamado cuando se hace clic en una película en uno de los RecyclerViews.
+     *
+     * @param position La posición de la película en el RecyclerView.
+     */
     @Override
     public void onItemClick(int position) {
-        // Verificar de cuál lista es la posición
         String movieUrl = "";
         if (mayor18.getAdapter() != null && mayor18.getAdapter().getItemCount() > position) {
             movieUrl = movieUrlsMayor18.get(position);

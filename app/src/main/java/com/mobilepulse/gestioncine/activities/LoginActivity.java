@@ -24,6 +24,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Actividad para el inicio de sesión de usuarios.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private static final String IP = Configuration.IP;
@@ -35,6 +38,11 @@ public class LoginActivity extends AppCompatActivity {
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Handler handler = new Handler(Looper.getMainLooper());
 
+    /**
+     * Llamado cuando la actividad es creada por primera vez.
+     *
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de haber sido previamente terminada, este Bundle contiene los datos que más recientemente suministró en onSaveInstanceState(Bundle). De lo contrario, está nulo.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +83,12 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // Método para cifrar la contraseña usando SHA-256
+    /**
+     * Método para cifrar la contraseña usando SHA-256.
+     *
+     * @param password La contraseña a cifrar.
+     * @return La contraseña cifrada en formato hexadecimal.
+     */
     public String cifrarPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -95,7 +108,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    // Método para enviar orden al servidor.
+    /**
+     * Método para enviar una orden al servidor.
+     *
+     * @param user El usuario que intenta iniciar sesión.
+     * @param passwordHashed La contraseña cifrada del usuario.
+     */
     private void ordenServer(String user, String passwordHashed) {
         executorService.execute(() -> {
             String response;
@@ -129,7 +147,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // Método para manejar la respuesta del servidor.
+    /**
+     * Método para manejar la respuesta del servidor.
+     *
+     * @param result La respuesta del servidor.
+     */
     private void handleServerResponse(String result) {
         if ("LOGIN_SUCCESS".equals(result)) {
             // Aquí puedes abrir la actividad principal de tu aplicación

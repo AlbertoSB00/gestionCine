@@ -27,6 +27,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Actividad para añadir comentarios y valoraciones a las películas.
+ */
 public class AddCommentActivity extends AppCompatActivity {
 
     private static final String IP = Configuration.IP;
@@ -36,11 +39,16 @@ public class AddCommentActivity extends AppCompatActivity {
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private String correo;
-    private int selectedMovieId; // Cambiar a int para el ID de la película
+    private int selectedMovieId;
     private EditText etComment;
     private RatingBar rbRating;
     private List<String> movieImageUrls;
 
+    /**
+     * Llamado cuando la actividad es creada por primera vez.
+     *
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de haber sido previamente terminada, este Bundle contiene los datos que más recientemente suministró en onSaveInstanceState(Bundle). De lo contrario, está nulo.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,18 +76,19 @@ public class AddCommentActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                selectedMovieId = position; // La posición coincide con el ID de la película
+                selectedMovieId = position;
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
 
-        // Manejar el evento de clic del botón de envío
         btnSubmit.setOnClickListener(v -> submitComment());
     }
 
-    // Método para enviar el comentario
+    /**
+     * Método para enviar el comentario.
+     */
     private void submitComment() {
         String comment = etComment.getText().toString();
         int rating = (int) rbRating.getRating();
@@ -100,11 +109,16 @@ public class AddCommentActivity extends AppCompatActivity {
         });
     }
 
-    // Obtener id del usuario
+    /**
+     * Obtener el ID del usuario.
+     *
+     * @param correo El correo electrónico del usuario.
+     * @return Un CompletableFuture que contiene el ID del usuario.
+     */
     private CompletableFuture<Integer> obtenerIdUsuario(String correo) {
         return CompletableFuture.supplyAsync(() -> {
             try (Socket socket = new Socket(IP, PORT)) {
-                socket.setSoTimeout(5000); // 5 segundos de timeout
+                socket.setSoTimeout(5000);
                 try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
                     out.println("GET_USER_ID");
@@ -122,6 +136,13 @@ public class AddCommentActivity extends AppCompatActivity {
         }, executorService);
     }
 
+    /**
+     * Enviar el comentario al servidor.
+     *
+     * @param comment El comentario del usuario.
+     * @param rating La valoración del usuario.
+     * @return Una cadena que indica el resultado de la operación.
+     */
     private String submitCommentToServer(String comment, int rating) {
         try {
             CompletableFuture<Integer> userIdFuture = obtenerIdUsuario(correo);
@@ -129,7 +150,7 @@ public class AddCommentActivity extends AppCompatActivity {
             Integer userId = userIdFuture.join();
 
             try (Socket socket = new Socket(IP, PORT)) {
-                socket.setSoTimeout(5000); // 5 segundos de timeout
+                socket.setSoTimeout(5000);
                 try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                      PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
                     out.println("INSERT_COMMENT");
@@ -146,7 +167,11 @@ public class AddCommentActivity extends AppCompatActivity {
         }
     }
 
-    // Método para obtener la lista de películas
+    /**
+     * Método para obtener la lista de películas.
+     *
+     * @param viewPager El ViewPager donde se mostrarán las películas.
+     */
     private void fetchMovieList(ViewPager viewPager) {
         executorService.execute(() -> {
             List<String> fetchedMovieList = fetchMoviesFromServer();
@@ -159,6 +184,11 @@ public class AddCommentActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Obtener la lista de películas desde el servidor.
+     *
+     * @return Una lista de URLs de las imágenes de las películas.
+     */
     private List<String> fetchMoviesFromServer() {
         List<String> movieList = new ArrayList<>();
         try (Socket socket = new Socket(IP, PORT)) {

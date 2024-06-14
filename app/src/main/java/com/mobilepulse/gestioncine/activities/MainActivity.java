@@ -28,11 +28,19 @@ import com.mobilepulse.gestioncine.fragments.SettingsFragment;
 
 import java.util.Locale;
 
+/**
+ * Actividad principal que maneja la navegación y la configuración del usuario.
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
     private SharedPreferences prefs;
 
+    /**
+     * Llamado cuando la actividad es creada por primera vez.
+     *
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de haber sido previamente terminada, este Bundle contiene los datos que más recientemente suministró en onSaveInstanceState(Bundle). De lo contrario, está nulo.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +121,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
-    // Asignando el comportamiento de los items de la barra de navegación.
+    /**
+     * Maneja la selección de ítems en el Navigation Drawer.
+     *
+     * @param menuItem El ítem del menú seleccionado.
+     * @return true si la selección fue manejada correctamente.
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int itemId = menuItem.getItemId();
@@ -187,6 +200,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    /**
+     * Carga la preferencia de lenguaje guardada por el usuario y actualiza la configuración del sistema.
+     */
     private void loadLanguagePreference() {
         int languageIndex = prefs.getInt("language", 0);
 

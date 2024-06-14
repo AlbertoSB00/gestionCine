@@ -23,6 +23,9 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Actividad para mostrar los datos de una película específica.
+ */
 public class MovieDataActivity extends AppCompatActivity {
 
     private static final String IP = Configuration.IP;
@@ -31,6 +34,11 @@ public class MovieDataActivity extends AppCompatActivity {
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final Handler handler = new Handler(Looper.getMainLooper());
 
+    /**
+     * Llamado cuando la actividad es creada por primera vez.
+     *
+     * @param savedInstanceState Si la actividad está siendo re-inicializada después de haber sido previamente terminada, este Bundle contiene los datos que más recientemente suministró en onSaveInstanceState(Bundle). De lo contrario, está nulo.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +58,11 @@ public class MovieDataActivity extends AppCompatActivity {
                 .into(imageView);
     }
 
-    // Método para enviar orden al servidor.
+    /**
+     * Método para enviar una solicitud al servidor.
+     *
+     * @param imageUrl La URL de la imagen de la película.
+     */
     private void ordenServer(String imageUrl) {
         executorService.execute(() -> {
             String response;
@@ -83,7 +95,11 @@ public class MovieDataActivity extends AppCompatActivity {
         });
     }
 
-    // Método para manejar la respuesta del servidor.
+    /**
+     * Método para manejar la respuesta del servidor.
+     *
+     * @param result La respuesta del servidor.
+     */
     private void handleServerResponse(String result) {
         if (result.equals("ERROR")) {
             Toast.makeText(this, "Error al obtener los datos de la película", Toast.LENGTH_SHORT).show();

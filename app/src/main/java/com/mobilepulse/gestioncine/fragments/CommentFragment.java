@@ -33,6 +33,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Fragmento para mostrar y agregar comentarios sobre películas.
+ */
 public class CommentFragment extends Fragment {
 
     private static final String IP = Configuration.IP;
@@ -46,12 +49,24 @@ public class CommentFragment extends Fragment {
 
     public CommentFragment() {}
 
+    /**
+     * Método llamado cuando se crea el fragmento.
+     *
+     * @param savedInstanceState Si el fragmento se está reanudando a partir de un estado previamente guardado, este es el estado.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Aquí puedes inicializar cualquier dato que necesites
     }
 
+    /**
+     * Método llamado para crear y devolver la vista asociada con el fragmento.
+     *
+     * @param inflater           El LayoutInflater que se usa para inflar la vista.
+     * @param container          Si no es nulo, este es el grupo al que se adjunta la vista después de inflarse.
+     * @param savedInstanceState Si no es nulo, este fragmento se está reactivando a partir de un estado guardado previamente.
+     * @return La vista root del fragmento.
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,11 +80,14 @@ public class CommentFragment extends Fragment {
         Button addCommentButton = view.findViewById(R.id.addCommentButton);
         addCommentButton.setOnClickListener(v -> openAddCommentActivity());
 
-        loadComments(); // Método para cargar los comentarios desde la BD
+        loadComments();
 
         return view;
     }
 
+    /**
+     * Carga los comentarios desde la base de datos.
+     */
     private void loadComments() {
         executorService.execute(() -> {
             String response;
@@ -104,7 +122,11 @@ public class CommentFragment extends Fragment {
         });
     }
 
-    // Método para manejar la respuesta del servidor y actualizar la lista de comentarios.
+    /**
+     * Método para manejar la respuesta del servidor y actualizar la lista de comentarios.
+     *
+     * @param result La respuesta del servidor.
+     */
     @SuppressLint("NotifyDataSetChanged")
     private void handleCommentsResponse(String result) {
         if (!"ERROR".equals(result)) {
@@ -127,6 +149,9 @@ public class CommentFragment extends Fragment {
         }
     }
 
+    /**
+     * Abre la actividad para agregar un comentario.
+     */
     private void openAddCommentActivity() {
         Intent intent = new Intent(getActivity(), AddCommentActivity.class);
         intent.putExtra("CORREO", getArguments().getString("CORREO"));
